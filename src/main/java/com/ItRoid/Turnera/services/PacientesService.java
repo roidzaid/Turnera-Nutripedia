@@ -1,0 +1,13 @@
+package com.ItRoid.Turnera.services;
+
+import com.ItRoid.Turnera.entities.PacienteEntity;
+import com.ItRoid.Turnera.models.PacienteModel;
+
+public interface PacientesService<T>{
+
+    PacienteModel crearPaciente (PacienteModel paciente) throws Exception;
+    PacienteModel BuscarPaciente (String dni);
+
+    PacienteModel BuscarPacientexId (Long id);
+
+}

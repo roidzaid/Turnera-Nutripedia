@@ -1,0 +1,94 @@
+package com.ItRoid.Turnera.services.Impl;
+
+import com.ItRoid.Turnera.entities.PacienteEntity;
+import com.ItRoid.Turnera.models.PacienteModel;
+import com.ItRoid.Turnera.repositories.PacientesRepository;
+import com.ItRoid.Turnera.services.PacientesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.util.Date;
+
+@Service
+public class PacientesServiceImpl implements PacientesService {
+
+    @Autowired
+    private PacientesRepository pacientesRepository;
+
+
+    @Override
+    public PacienteModel crearPaciente(PacienteModel paciente) throws Exception {
+
+        PacienteEntity pe = this.pacientesRepository.findByDNI(paciente.getDni());
+
+        if(pe==null) {
+            PacienteEntity pacienteEntity = new PacienteEntity(
+                    Date.from(Instant.now()),
+                    paciente.getNombre(),
+                    paciente.getApellido(),
+                    paciente.getDni(),
+                    paciente.getFechaNac(),
+                    paciente.getDireccion(),
+                    paciente.getLocalidad(),
+                    paciente.getTelefono(),
+                    paciente.getMail());
+
+
+            this.pacientesRepository.save(pacienteEntity);
+
+            return paciente;
+        }else{
+            throw new Exception("Ya fue dado de alta " + paciente.getApellido() + ", " + paciente.getNombre());
+        }
+
+    }
+
+    @Override
+    public PacienteModel BuscarPaciente(String dni) {
+
+        PacienteEntity pacienteEntity = this.pacientesRepository.findByDNI(dni);
+
+        if (pacienteEntity != null){
+            PacienteModel pacienteModel = new PacienteModel(
+                    pacienteEntity.getIdPaciente(),
+                    pacienteEntity.getNombre(),
+                    pacienteEntity.getApellido(),
+                    pacienteEntity.getDni(),
+                    pacienteEntity.getFechaNac(),
+                    pacienteEntity.getDireccion(),
+                    pacienteEntity.getLocalidad(),
+                    pacienteEntity.getTelefono(),
+                    pacienteEntity.getMail());
+
+            return pacienteModel;
+        }else{
+            return null;
+        }
+
+    }
+
+    @Override
+    public PacienteModel BuscarPacientexId(Long idPaciente) {
+
+        PacienteEntity pacienteEntity = this.pacientesRepository.findByIdPaciente(idPaciente);
+
+        if (pacienteEntity != null){
+            PacienteModel pacienteModel = new PacienteModel(
+                    pacienteEntity.getIdPaciente(),
+                    pacienteEntity.getNombre(),
+                    pacienteEntity.getApellido(),
+                    pacienteEntity.getDni(),
+                    pacienteEntity.getFechaNac(),
+                    pacienteEntity.getDireccion(),
+                    pacienteEntity.getLocalidad(),
+                    pacienteEntity.getTelefono(),
+                    pacienteEntity.getMail());
+
+            return pacienteModel;
+        }else{
+            return null;
+        }
+
+    }
+}
