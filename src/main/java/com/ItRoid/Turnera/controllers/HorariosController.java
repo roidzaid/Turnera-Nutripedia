@@ -1,6 +1,7 @@
 package com.ItRoid.Turnera.controllers;
 
 import com.ItRoid.Turnera.models.ConfiguracionTurnoModel;
+import com.ItRoid.Turnera.models.DiasAtencionModel;
 import com.ItRoid.Turnera.models.DiasDisponiblesModel;
 import com.ItRoid.Turnera.models.HorariosModel;
 import com.ItRoid.Turnera.services.HorariosService;
@@ -80,6 +81,21 @@ public class HorariosController {
             List<DiasDisponiblesModel> diasDisponibles = this.horariosService.BuscarHorarios(idProfesional, tipoTurno);
 
             return new ResponseEntity<List<DiasDisponiblesModel>>(diasDisponibles, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("diasDeAtencion/{idProfesional}")
+    public ResponseEntity<?> buscarFechas(@PathVariable("idProfesional") Long idProfesional) throws Exception{
+
+        logger.info("Se buscas las fechas para el profesional :" + idProfesional);
+
+        try {
+
+            List<DiasAtencionModel> diasAtencion = this.horariosService.BuscarHorarios(idProfesional);
+
+            return new ResponseEntity<List<DiasAtencionModel>>(diasAtencion, HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

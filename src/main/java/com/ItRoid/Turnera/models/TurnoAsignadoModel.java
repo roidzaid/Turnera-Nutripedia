@@ -19,12 +19,14 @@ public class TurnoAsignadoModel {
     private String dniPaciente;
     private String telefonoPaciente;
     private String mailPaciente;
+    private String tipoConsulta;
+    private String motivoConsulta;
 
 
     public TurnoAsignadoModel() {
     }
 
-    public TurnoAsignadoModel(Long idTurnoAsignado, Long idConfiguracionTurno, String fecha, String hora, Long idProfesional, String nombreProfesional, String apellidoProfesional, String especialidad, String mailProfesional, Long idPaciente, String nombrePaciente, String apellidoPaciente, String dniPaciente, String telefonoPaciente, String mailPaciente) {
+    public TurnoAsignadoModel(Long idTurnoAsignado, Long idConfiguracionTurno, String fecha, String hora, Long idProfesional, String nombreProfesional, String apellidoProfesional, String especialidad, String mailProfesional, Long idPaciente, String nombrePaciente, String apellidoPaciente, String dniPaciente, String telefonoPaciente, String mailPaciente, String tipoConsulta, String motivoConsulta) {
         this.idTurnoAsignado = idTurnoAsignado;
         this.idConfiguracionTurno = idConfiguracionTurno;
         this.fecha = fecha;
@@ -40,6 +42,8 @@ public class TurnoAsignadoModel {
         this.dniPaciente = dniPaciente;
         this.telefonoPaciente = telefonoPaciente;
         this.mailPaciente = mailPaciente;
+        this.tipoConsulta = tipoConsulta;
+        this.motivoConsulta = motivoConsulta;
     }
 
     public Long getIdTurnoAsignado() {
@@ -160,5 +164,21 @@ public class TurnoAsignadoModel {
 
     public void setMailPaciente(String mailPaciente) {
         this.mailPaciente = mailPaciente;
+    }
+
+    public String getTipoConsulta() {
+        return tipoConsulta;
+    }
+
+    public void setTipoConsulta(String tipoConsulta) {
+        this.tipoConsulta = tipoConsulta;
+    }
+
+    public String getMotivoConsulta() {
+        return motivoConsulta;
+    }
+
+    public void setMotivoConsulta(String motivoConsulta) {
+        this.motivoConsulta = motivoConsulta;
     }
 }

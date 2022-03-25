@@ -41,7 +41,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                 profesional.getDni(),
                 profesional.getMatricula(),
                 profesional.getEspecialidad(),
-                profesional.getMail()
+                profesional.getMail(),
+                profesional.getTelefono(),
+                profesional.getValorConsulta()
                 );
 
             this.profesionalesRepository.save(profesionalEntity);
@@ -68,7 +70,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getDni(),
                     profesionalEntity.getMatricula(),
                     profesionalEntity.getEspecialidad(),
-                    profesionalEntity.getMail());
+                    profesionalEntity.getMail(),
+                    profesionalEntity.getTelefono(),
+                    profesionalEntity.getValorConsulta());
 
             return profesionalModel;
 
@@ -92,7 +96,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getDni(),
                     profesionalEntity.getMatricula(),
                     profesionalEntity.getEspecialidad(),
-                    profesionalEntity.getMail());
+                    profesionalEntity.getMail(),
+                    profesionalEntity.getTelefono(),
+                    profesionalEntity.getValorConsulta());
 
             return profesionalModel;
 
@@ -118,7 +124,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getDni(),
                             e.getMatricula(),
                             e.getEspecialidad(),
-                            e.getMail()))
+                            e.getMail(),
+                            e.getTelefono(),
+                            e.getValorConsulta()))
                     .collect(Collectors.toList());
 
 
@@ -145,7 +153,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getDni(),
                             e.getMatricula(),
                             e.getEspecialidad(),
-                            e.getMail()))
+                            e.getMail(),
+                            e.getTelefono(),
+                            e.getValorConsulta()))
                     .collect(Collectors.toList());
 
 
@@ -170,7 +180,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                         e.getDni(),
                         e.getMatricula(),
                         e.getEspecialidad(),
-                        e.getMail()))
+                        e.getMail(),
+                        e.getTelefono(),
+                        e.getValorConsulta()))
                 .collect(Collectors.toList());
 
 

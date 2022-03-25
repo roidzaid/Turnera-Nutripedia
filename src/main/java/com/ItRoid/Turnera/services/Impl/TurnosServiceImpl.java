@@ -1,12 +1,10 @@
 package com.ItRoid.Turnera.services.Impl;
 
 import com.ItRoid.Turnera.entities.*;
-import com.ItRoid.Turnera.models.AsignarTurnoModel;
-import com.ItRoid.Turnera.models.ProfesionalModel;
-import com.ItRoid.Turnera.models.TurnoAsignadoModel;
-import com.ItRoid.Turnera.models.TurnosDisponiblesModel;
+import com.ItRoid.Turnera.models.*;
 import com.ItRoid.Turnera.repositories.*;
 import com.ItRoid.Turnera.services.HorariosService;
+import com.ItRoid.Turnera.services.MailsService;
 import com.ItRoid.Turnera.services.TurnosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +34,9 @@ public class TurnosServiceImpl implements TurnosService {
 
     @Autowired
     private PacientesRepository pacientesRepository;
+
+    @Autowired
+    private MailsService mailsService;
 
 
     @Override
@@ -86,9 +87,31 @@ public class TurnosServiceImpl implements TurnosService {
                 pacienteEntity.getApellido(),
                 pacienteEntity.getDni(),
                 pacienteEntity.getTelefono(),
-                pacienteEntity.getMail());
+                pacienteEntity.getMail(),
+                asignarTurnoModel.getTipoConsulta(),
+                asignarTurnoModel.getMotivoConsulta());
 
         this.turnosAsignadosRepository.save(turnoAsignadoEntity);
+
+        MailTurnoModel mailTurnoModel = new MailTurnoModel(
+                pacienteEntity.getMail(),
+                pacienteEntity.getNombre() + " " + pacienteEntity.getApellido(),
+                pacienteEntity.getDni(),
+                pacienteEntity.getTelefono(),
+                profesionalEntity.getMail(),
+                profesionalEntity.getNombre() + " " + profesionalEntity.getApellido(),
+                profesionalEntity.getTelefono(),
+                asignarTurnoModel.getEspecialidad(),
+                asignarTurnoModel.getFecha(),
+                configuracionTurnosEntity.getHora(),
+                asignarTurnoModel.getTipoConsulta(),
+                asignarTurnoModel.getMotivoConsulta());
+
+        //Enviar mail a paciente
+        mailsService.enviarMailPaciente(mailTurnoModel);
+
+        //Enviar mail a profesional
+        mailsService.enviarMailProfecional(mailTurnoModel);
 
     }
 
@@ -153,7 +176,9 @@ public class TurnosServiceImpl implements TurnosService {
                         e.getApellidoPaciente(),
                         e.getDniPaciente(),
                         e.getTelefonoPaciente(),
-                        e.getMailPaciente()))
+                        e.getMailPaciente(),
+                        e.getTipoConsulta(),
+                        e.getMotivoConsulta()))
                 .collect(Collectors.toList());
 
         return list;

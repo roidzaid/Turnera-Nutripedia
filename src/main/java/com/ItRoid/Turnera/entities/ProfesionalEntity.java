@@ -37,6 +37,12 @@ public class ProfesionalEntity {
     @Column(name = "mail")
     private String mail;
 
+    @Column(name = "telefono")
+    private String telefono;
+
+    @Column(name = "valorConsulta")
+    private int valorConsulta;
+
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="idProfesional")
     private List<HorariosEntity> horarios;
@@ -44,7 +50,7 @@ public class ProfesionalEntity {
     public ProfesionalEntity() {
     }
 
-    public ProfesionalEntity(Date fechaAlta, String nombre, String apellido, String dni, String matricula, String especialidad, String mail) {
+    public ProfesionalEntity(Date fechaAlta, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, int valorConsulta) {
         this.fechaAlta = fechaAlta;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -52,6 +58,8 @@ public class ProfesionalEntity {
         this.matricula = matricula;
         this.especialidad = especialidad;
         this.mail = mail;
+        this.telefono = telefono;
+        this.valorConsulta = valorConsulta;
     }
 
     public Long getIdProfesional() {
@@ -110,20 +118,36 @@ public class ProfesionalEntity {
         this.especialidad = especialidad;
     }
 
-    public List<HorariosEntity> getHorarios() {
-        return horarios;
-    }
-
-    public void setHorarios(List<HorariosEntity> horarios) {
-        this.horarios = horarios;
-    }
-
     public String getMail() {
         return mail;
     }
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public int getValorConsulta() {
+        return valorConsulta;
+    }
+
+    public void setValorConsulta(int valorConsulta) {
+        this.valorConsulta = valorConsulta;
+    }
+
+    public List<HorariosEntity> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<HorariosEntity> horarios) {
+        this.horarios = horarios;
     }
 }
 

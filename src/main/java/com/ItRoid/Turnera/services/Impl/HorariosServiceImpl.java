@@ -2,9 +2,7 @@ package com.ItRoid.Turnera.services.Impl;
 
 import com.ItRoid.Turnera.entities.ConfiguracionTurnosEntity;
 import com.ItRoid.Turnera.entities.HorariosEntity;
-import com.ItRoid.Turnera.models.ConfiguracionTurnoModel;
-import com.ItRoid.Turnera.models.DiasDisponiblesModel;
-import com.ItRoid.Turnera.models.HorariosModel;
+import com.ItRoid.Turnera.models.*;
 import com.ItRoid.Turnera.repositories.ConfiguracionTurnosRepository;
 import com.ItRoid.Turnera.repositories.HorariosRepository;
 import com.ItRoid.Turnera.services.FeriadosService;
@@ -15,7 +13,9 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HorariosServiceImpl implements HorariosService {
@@ -222,6 +222,34 @@ public class HorariosServiceImpl implements HorariosService {
         }
 
         return DiasDisponibles;
+    }
+
+    @Override
+    public List<DiasAtencionModel> BuscarHorarios(Long idProfesional) throws Exception {
+
+        List<HorariosEntity> horariosEntity = this.horariosRepository.findByIdProfesional(idProfesional);
+
+        if (horariosEntity != null) {
+
+            List<DiasAtencionModel> list = horariosEntity
+                    .stream()
+                    .map((e) -> new DiasAtencionModel(
+                            e.getIdHorario(),
+                            e.getFechaAlta(),
+                            e.getDiaDeSemana(),
+                            e.getTipoTurno(),
+                            e.getHoraDesde(),
+                            e.getHoraHasta(),
+                            e.getDuracionTurnos()))
+                    .collect(Collectors.toList());
+
+            return list;
+
+        }else{
+            throw new Exception("No existe horarios cargados para el profesional: " +  idProfesional);
+        }
+
+
     }
 
     @Override

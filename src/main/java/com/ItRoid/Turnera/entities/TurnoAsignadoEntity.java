@@ -59,12 +59,18 @@ public class TurnoAsignadoEntity {
     @Column(name = "mailPaciente")
     private String mailPaciente;
 
+    @Column(name = "tipoConsulta")
+    private String tipoConsulta;
+
+    @Column(name = "motivoConsulta")
+    private String motivoConsulta;
+
 
 
     public TurnoAsignadoEntity() {
     }
 
-    public TurnoAsignadoEntity(Long idConfiguracionTurno, String fecha, String hora, String fechayHora, Long idProfesional, String nombreProfesional, String apellidoProfesional, String especialidad, String mailProfesional, Long idPaciente, String nombrePaciente, String apellidoPaciente, String dniPaciente, String telefonoPaciente, String mailPaciente) {
+    public TurnoAsignadoEntity(Long idConfiguracionTurno, String fecha, String hora, String fechayHora, Long idProfesional, String nombreProfesional, String apellidoProfesional, String especialidad, String mailProfesional, Long idPaciente, String nombrePaciente, String apellidoPaciente, String dniPaciente, String telefonoPaciente, String mailPaciente,String tipoConsulta, String motivoConsulta) {
         this.idConfiguracionTurno = idConfiguracionTurno;
         this.fecha = fecha;
         this.hora = hora;
@@ -80,6 +86,8 @@ public class TurnoAsignadoEntity {
         this.dniPaciente = dniPaciente;
         this.telefonoPaciente = telefonoPaciente;
         this.mailPaciente = mailPaciente;
+        this.tipoConsulta = tipoConsulta;
+        this.motivoConsulta = motivoConsulta;
     }
 
     public Long getIdTurnoAsignado() {
@@ -208,5 +216,21 @@ public class TurnoAsignadoEntity {
 
     public void setFechayHora(String fechayHora) {
         this.fechayHora = fechayHora;
+    }
+
+    public String getTipoConsulta() {
+        return tipoConsulta;
+    }
+
+    public void setTipoConsulta(String tipoConsulta) {
+        this.tipoConsulta = tipoConsulta;
+    }
+
+    public String getMotivoConsulta() {
+        return motivoConsulta;
+    }
+
+    public void setMotivoConsulta(String motivoConsulta) {
+        this.motivoConsulta = motivoConsulta;
     }
 }
