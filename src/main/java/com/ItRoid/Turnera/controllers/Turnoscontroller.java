@@ -68,4 +68,50 @@ public class Turnoscontroller {
         }
     }
 
+    @GetMapping("/agenda/{idProfesional}")
+    public ResponseEntity<?> agenda(@PathVariable("idProfesional") Long idProfesional) throws Exception{
+
+        logger.info("Buscar agenda de : " + idProfesional);
+
+        try {
+
+            List<TurnoAsignadoModel> agenda = this.turnosService.agenda(idProfesional);
+
+            return new ResponseEntity<List<TurnoAsignadoModel>>(agenda, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/{idTurnoAsignado}")
+    public ResponseEntity<?> cancelarTurno(@PathVariable("idTurnoAsignado") Long idTurnoAsignado) throws Exception{
+
+        logger.info("Se cancela el turno: " + idTurnoAsignado);
+
+        try {
+
+            this.turnosService.cancelarTurno(idTurnoAsignado);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/buscarTurno/{idTurnoAsignado}")
+    public ResponseEntity<?> buscarTurno(@PathVariable("idTurnoAsignado") Long idTurnoAsignado) throws Exception{
+
+        logger.info("Buscar turno : " + idTurnoAsignado);
+
+        try {
+
+            TurnoAsignadoModel turnoAsignadoModel = this.turnosService.buscarTurno(idTurnoAsignado);
+
+            return new ResponseEntity<TurnoAsignadoModel>(turnoAsignadoModel, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

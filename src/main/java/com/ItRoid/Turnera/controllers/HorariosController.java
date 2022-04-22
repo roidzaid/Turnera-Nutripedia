@@ -1,5 +1,6 @@
 package com.ItRoid.Turnera.controllers;
 
+import com.ItRoid.Turnera.entities.HorariosEntity;
 import com.ItRoid.Turnera.models.ConfiguracionTurnoModel;
 import com.ItRoid.Turnera.models.DiasAtencionModel;
 import com.ItRoid.Turnera.models.DiasDisponiblesModel;
@@ -24,6 +25,21 @@ public class HorariosController {
     @Autowired
     private HorariosService horariosService;
 
+    @GetMapping("/id/{idHorario}")
+    public ResponseEntity<?> budcarHorario(@PathVariable("idHorario") Long idHorario) throws Exception{
+
+        logger.info("se modifica el horario: " + idHorario);
+
+        try {
+
+            HorariosModel horariosModel = this.horariosService.buscarHorariosXId(idHorario);
+
+            return new ResponseEntity<HorariosModel>(horariosModel, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("{idHorario}")
     public ResponseEntity<?> modificarHorario(@PathVariable("idHorario") Long idHorario, @RequestBody HorariosModel horariosModel) throws Exception{
 
@@ -31,9 +47,9 @@ public class HorariosController {
 
         try {
 
-            this.horariosService.modificarHorario(idHorario, horariosModel);
+            HorariosModel horariosModel1 = this.horariosService.modificarHorario(idHorario, horariosModel);
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<HorariosModel>(horariosModel, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

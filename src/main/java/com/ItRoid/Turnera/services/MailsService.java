@@ -4,7 +4,6 @@ import com.ItRoid.Turnera.models.MailTurnoModel;
 
 public interface MailsService <T>{
 
-    void enviarMailPaciente(MailTurnoModel mailTurnoModel);
+    void enviarMail(String destinatario, String plantilla);
 
-    void enviarMailProfecional(MailTurnoModel mailTurnoModel);
 }

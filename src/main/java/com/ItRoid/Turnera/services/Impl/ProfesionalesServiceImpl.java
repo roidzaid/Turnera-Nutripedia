@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,6 +44,10 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                 );
 
             this.profesionalesRepository.save(profesionalEntity);
+
+            ProfesionalEntity profAux = this.profesionalesRepository.findByDni(profesional.getDni());
+
+            profesional.setIdProfesional(profAux.getIdProfesional());
 
             return profesional;
 
@@ -190,9 +191,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
     }
 
     @Override
-    public ProfesionalModel modificarProfesional(ProfesionalModel profesional, String dni) throws Exception {
+    public ProfesionalModel modificarProfesional(ProfesionalModel profesional, Long idProfesional) throws Exception {
 
-        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByDni(dni);
+        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByidProfesional(idProfesional);
 
 
         if (profesionalEntity != null) {
@@ -202,6 +203,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
             profesionalEntity.setDni(profesional.getDni());
             profesionalEntity.setMatricula(profesional.getMatricula());
             profesionalEntity.setEspecialidad(profesional.getEspecialidad());
+            profesionalEntity.setTelefono(profesional.getTelefono());
+            profesionalEntity.setMail(profesional.getMail());
+            profesionalEntity.setValorConsulta(profesional.getValorConsulta());
 
 
             this.profesionalesRepository.save(profesionalEntity);
@@ -209,7 +213,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
             return profesional;
 
         }else{
-            throw new Exception("No existe ningun profesional con dni: " +  dni);
+            throw new Exception("No existe ningun profesional con dni: " +  idProfesional);
         }
 
     }
@@ -231,20 +235,24 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
 
 
     @Override
-    public void agregarHorarios(String dni, HorariosModel horario) throws Exception {
+    public void agregarHorarios(Long idProfesional, HorariosModel horario) throws Exception {
 
+        //formateo la hora a 24hs
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
+        //seteo la variables desde y hasta con fecha y hora actual
         Calendar desde = Calendar.getInstance();
         Calendar hasta = Calendar.getInstance();
 
-        //calendar.set(Calendar.AM_PM, Calendar.AM);
+        //coloco en desde la hora del primer turno
+        desde.set(Calendar.AM_PM, Calendar.AM);
         desde.set(Calendar.HOUR, horario.getHoraDesde());
         desde.set(Calendar.MINUTE, horario.getMinutosDesde());
         desde.set(Calendar.SECOND, 00);
         String horaDesde = format.format(desde.getTime());
 
-        //calendar.set(Calendar.AM_PM, Calendar.PM);
+        //coloco en desde la hora de fin de ultimo turno
+        hasta.set(Calendar.AM_PM, Calendar.AM);
         hasta.set(Calendar.HOUR, horario.getHoraHasta());
         hasta.set(Calendar.MINUTE, horario.getMinutosHasta());
         hasta.set(Calendar.SECOND, 00);
@@ -263,6 +271,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
         int horaSig = horario.getHoraDesde();
         int minSig = horario.getMinutosDesde();
 
+
         Calendar ultTurno = Calendar.getInstance();
 
         int añoHoy = Calendar.getInstance().get(Calendar.YEAR);
@@ -274,10 +283,13 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
         ultTurno.set(Calendar.HOUR, horario.getHoraHasta());
         ultTurno.set(Calendar.MINUTE, horario.getMinutosHasta());
 
+        //resto la duracion de un turno al ultimo turno
         ultTurno.add(Calendar.MINUTE, -horario.getDuracionTurnos());
 
+        //inicializo la lista de horarios de turno para poder confgurarlos
         List<ConfiguracionTurnosEntity> listaConfigTurnos = new ArrayList<>();
         boolean ultimo = false;
+
 
         Calendar turno = Calendar.getInstance();
 
@@ -308,7 +320,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
         horarioEntity.setConfiguracionTurnos(listaConfigTurnos);
 
         //busco el profesional
-        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByDni(dni);
+        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByidProfesional(idProfesional);
 
         //agrego el horario
         profesionalEntity.getHorarios().add(horarioEntity);
@@ -316,10 +328,6 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
         //guardo profesional
         this.profesionalesRepository.save(profesionalEntity);
 
-
-
     }
-
-
 
 }

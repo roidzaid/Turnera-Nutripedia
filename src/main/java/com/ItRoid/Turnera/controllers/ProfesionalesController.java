@@ -10,8 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+
 
 @RestController
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
@@ -31,6 +37,7 @@ public class ProfesionalesController {
         logger.info("Se da de alta profecional: " + profesionalModel.getDni());
 
         try {
+
             this.profesionalesService.crearProfesional(profesionalModel);
 
             return new ResponseEntity<ProfesionalModel>(profesionalModel, HttpStatus.CREATED);
@@ -117,13 +124,13 @@ public class ProfesionalesController {
         }
     }
 
-    @PutMapping("/{dni}")
-    public ResponseEntity<?> modificarProfesional(@RequestBody ProfesionalModel profesionalModel, @PathVariable("dni") String dni) throws Exception  {
+    @PutMapping("/{idProfesional}")
+    public ResponseEntity<?> modificarProfesional(@RequestBody ProfesionalModel profesionalModel, @PathVariable("idProfesional") Long idProfesional) throws Exception  {
 
         logger.info("Se modifica profesional: " + profesionalModel.getApellido() + ", " + profesionalModel.getNombre());
 
         try {
-            ProfesionalModel profesional = this.profesionalesService.modificarProfesional(profesionalModel, dni);
+            ProfesionalModel profesional = this.profesionalesService.modificarProfesional(profesionalModel, idProfesional);
 
             return new ResponseEntity<ProfesionalModel>(profesional, HttpStatus.CREATED);
         }catch (Exception e){
@@ -148,14 +155,14 @@ public class ProfesionalesController {
 
 //horarios
 @PutMapping("/horario/{dni}")
-public ResponseEntity<?> agregarHorarios(@PathVariable("dni") String dni, @RequestBody HorariosModel horariosModel) throws Exception  {
+public ResponseEntity<?> agregarHorarios(@PathVariable("dni") Long idProfesional, @RequestBody HorariosModel horariosModel) throws Exception  {
 
-    logger.info("Se agrega horario para el profesional: " + dni);
+    logger.info("Se agrega horario para el profesional: " + idProfesional);
 
     try {
-        this.profesionalesService.agregarHorarios(dni, horariosModel);
+        this.profesionalesService.agregarHorarios(idProfesional, horariosModel);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<HorariosModel>(horariosModel, HttpStatus.CREATED);
     }catch (Exception e){
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -2,6 +2,7 @@ package com.ItRoid.Turnera.services.Impl;
 
 import com.ItRoid.Turnera.entities.*;
 import com.ItRoid.Turnera.models.*;
+import com.ItRoid.Turnera.plantillasMail.PlantillasMails;
 import com.ItRoid.Turnera.repositories.*;
 import com.ItRoid.Turnera.services.HorariosService;
 import com.ItRoid.Turnera.services.MailsService;
@@ -107,11 +108,13 @@ public class TurnosServiceImpl implements TurnosService {
                 asignarTurnoModel.getTipoConsulta(),
                 asignarTurnoModel.getMotivoConsulta());
 
+        PlantillasMails platilla = new PlantillasMails();
+
         //Enviar mail a paciente
-        mailsService.enviarMailPaciente(mailTurnoModel);
+        mailsService.enviarMail(pacienteEntity.getMail(), platilla.crearPlantillaParaPaciente(mailTurnoModel));
 
         //Enviar mail a profesional
-        mailsService.enviarMailProfecional(mailTurnoModel);
+        mailsService.enviarMail(profesionalEntity.getMail(), platilla.crearPlantillaParaProfesional(mailTurnoModel));
 
     }
 
@@ -182,6 +185,109 @@ public class TurnosServiceImpl implements TurnosService {
                 .collect(Collectors.toList());
 
         return list;
+
+    }
+
+    @Override
+    public List<TurnoAsignadoModel> agenda(Long idProfesional) throws Exception {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Calendar calendar = Calendar.getInstance();
+
+        String fechayHora = format.format(calendar.getTime());
+
+        List<TurnoAsignadoEntity> turnoAsignadoEntity = this.turnosAsignadosRepository.buscarAgenda(idProfesional, fechayHora);
+
+        List<TurnoAsignadoModel> list = turnoAsignadoEntity
+                .stream()
+                .map((e) -> new TurnoAsignadoModel(
+                        e.getIdTurnoAsignado(),
+                        e.getIdConfiguracionTurno(),
+                        e.getFecha(),
+                        e.getHora(),
+                        e.getIdProfesional(),
+                        e.getNombreProfesional(),
+                        e.getApellidoProfesional(),
+                        e.getEspecialidad(),
+                        e.getMailProfesional(),
+                        e.getIdPaciente(),
+                        e.getNombrePaciente(),
+                        e.getApellidoPaciente(),
+                        e.getDniPaciente(),
+                        e.getTelefonoPaciente(),
+                        e.getMailPaciente(),
+                        e.getTipoConsulta(),
+                        e.getMotivoConsulta()))
+                .collect(Collectors.toList());
+
+        return list;
+    }
+
+    @Override
+    public void cancelarTurno(Long idTurnoAsignado) throws Exception {
+
+        TurnoAsignadoEntity turnoAsignado =  this.turnosAsignadosRepository.buscarTurnoXId(idTurnoAsignado);
+
+        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByidProfesional(turnoAsignado.getIdProfesional());
+
+        PacienteEntity pacienteEntity = this.pacientesRepository.findByIdPaciente(turnoAsignado.getIdPaciente());
+        //enviar mail a paciente y profesional
+
+        this.turnosAsignadosRepository.delete(turnoAsignado);
+
+
+        MailTurnoModel mailTurnoModel = new MailTurnoModel(
+                pacienteEntity.getMail(),
+                pacienteEntity.getNombre() + " " + pacienteEntity.getApellido(),
+                pacienteEntity.getDni(),
+                pacienteEntity.getTelefono(),
+                profesionalEntity.getMail(),
+                profesionalEntity.getNombre() + " " + profesionalEntity.getApellido(),
+                profesionalEntity.getTelefono(),
+                turnoAsignado.getEspecialidad(),
+                turnoAsignado.getFecha(),
+                turnoAsignado.getHora(),
+                turnoAsignado.getTipoConsulta(),
+                turnoAsignado.getMotivoConsulta());
+
+        PlantillasMails platilla = new PlantillasMails();
+
+        //Enviar mail a paciente
+        mailsService.enviarMail(pacienteEntity.getMail(), platilla.crearPlantillaParaPacienteCancelacion(mailTurnoModel));
+
+        //Enviar mail a profesional
+        mailsService.enviarMail(profesionalEntity.getMail(), platilla.crearPlantillaParaProfesionalCancelacion(mailTurnoModel));
+
+    }
+
+    @Override
+    public TurnoAsignadoModel buscarTurno(Long idTurnoAsignado) throws Exception {
+
+        TurnoAsignadoEntity e =  this.turnosAsignadosRepository.buscarTurnoXId(idTurnoAsignado);
+
+        TurnoAsignadoModel turnoAsignadoModel = new TurnoAsignadoModel(
+                e.getIdTurnoAsignado(),
+                e.getIdConfiguracionTurno(),
+                e.getFecha(),
+                e.getHora(),
+                e.getIdProfesional(),
+                e.getNombreProfesional(),
+                e.getApellidoProfesional(),
+                e.getEspecialidad(),
+                e.getMailProfesional(),
+                e.getIdPaciente(),
+                e.getNombrePaciente(),
+                e.getApellidoPaciente(),
+                e.getDniPaciente(),
+                e.getTelefonoPaciente(),
+                e.getMailPaciente(),
+                e.getTipoConsulta(),
+                e.getMotivoConsulta());
+
+        return turnoAsignadoModel;
+
+
 
     }
 }

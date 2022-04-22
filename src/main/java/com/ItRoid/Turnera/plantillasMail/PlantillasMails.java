@@ -1,0 +1,177 @@
+package com.ItRoid.Turnera.plantillasMail;
+
+import com.ItRoid.Turnera.models.MailTurnoModel;
+
+public class PlantillasMails {
+
+    public PlantillasMails() {
+    }
+
+    public String crearPlantillaParaPaciente(MailTurnoModel mailTurnoModel){
+        String html  ="<!DOCTYPE html>\n"
+                + "<html>\n"
+                + "<head>\n"
+                + "<style>\n"
+                + "table {\n"
+                + "  border-collapse: collapse;\n"
+                + "  width: 100%;\n"
+                + "}\n"
+                + "\n"
+                + "th, td {\n"
+                + "  text-align: left;\n"
+                + "  padding: 8px;\n"
+                + "}\n"
+                + "\n"
+                + "tr:nth-child(even){background-color: #f2f2f2}\n"
+                + "\n"
+                + "th {\n"
+                + "  background-color: #31572C;\n"
+                + "  color: white;\n"
+                + "}\n"
+                + "</style>\n"
+                + "</head>\n"
+                + "<body>\n"
+                + "\n"
+                + "<h2>Hola "+mailTurnoModel.getNombrePaciente()+"</h2>\n"
+                + "\n"
+                + "<h4>Le confirmamos el turno para el " +mailTurnoModel.getFecha() + " a las " +mailTurnoModel.getHora()+" hs con " +mailTurnoModel.getNombreProfecional()+"("+mailTurnoModel.getEspecialidad()+")"+"</h4>\n"
+                + "\n"
+                + "\n"
+                + "<h4>De no poder asistir, o presentar sintomas compatibles con infeccion por COVID, por favor avisar al telefono "+mailTurnoModel.getTelefonoProfesional()+" con anterioridad</h4>\n"
+                + "\n"
+                + "<h4>Muchas gracias!!</h4>\n"
+                + "\n"
+                + "\n"
+                + "</body>\n"
+                + "</html>";
+
+        return html;
+    }
+
+    public String crearPlantillaParaPacienteCancelacion(MailTurnoModel mailTurnoModel){
+        String html  ="<!DOCTYPE html>\n"
+                + "<html>\n"
+                + "<head>\n"
+                + "<style>\n"
+                + "table {\n"
+                + "  border-collapse: collapse;\n"
+                + "  width: 100%;\n"
+                + "}\n"
+                + "\n"
+                + "th, td {\n"
+                + "  text-align: left;\n"
+                + "  padding: 8px;\n"
+                + "}\n"
+                + "\n"
+                + "tr:nth-child(even){background-color: #f2f2f2}\n"
+                + "\n"
+                + "th {\n"
+                + "  background-color: #31572C;\n"
+                + "  color: white;\n"
+                + "}\n"
+                + "</style>\n"
+                + "</head>\n"
+                + "<body>\n"
+                + "\n"
+                + "<h2>Hola "+mailTurnoModel.getNombrePaciente()+"</h2>\n"
+                + "\n"
+                + "<h4>Le informamos que fue cancelado su turno para el " +mailTurnoModel.getFecha() + " a las " +mailTurnoModel.getHora()+" hs con " +mailTurnoModel.getNombreProfecional()+"("+mailTurnoModel.getEspecialidad()+")"+"</h4>\n"
+                + "\n"
+                + "\n"
+                + "<h4>Por favor solicitamos que vuelva a gestiones un turno por nuestra web o comunicarse al telefono "+mailTurnoModel.getTelefonoProfesional()+"/h4>\n"
+                + "\n"
+                + "<h4>Muchas gracias!!</h4>\n"
+                + "\n"
+                + "\n"
+                + "</body>\n"
+                + "</html>";
+
+        return html;
+    }
+
+
+    public String crearPlantillaParaProfesional(MailTurnoModel mailTurnoModel){
+        String html  ="<!DOCTYPE html>\n"
+                + "<html>\n"
+                + "<head>\n"
+                + "<style>\n"
+                + "table {\n"
+                + "  border-collapse: collapse;\n"
+                + "  width: 100%;\n"
+                + "}\n"
+                + "\n"
+                + "th, td {\n"
+                + "  text-align: left;\n"
+                + "  padding: 8px;\n"
+                + "}\n"
+                + "\n"
+                + "tr:nth-child(even){background-color: #f2f2f2}\n"
+                + "\n"
+                + "th {\n"
+                + "  background-color: #31572C;\n"
+                + "  color: white;\n"
+                + "}\n"
+                + "</style>\n"
+                + "</head>\n"
+                + "<body>\n"
+                + "\n"
+                + "<h2>Hola "+mailTurnoModel.getNombreProfecional()+"</h2>\n"
+                + "\n"
+                + "<h4>Hemos confirmado un turno para el dia " +mailTurnoModel.getFecha() + " a las " +mailTurnoModel.getHora()+" hs con " +mailTurnoModel.getNombrePaciente()+"("+mailTurnoModel.getDniPaciente()+") telefono: "+mailTurnoModel.getTelefonoPaciente()+"</h4>\n"
+                + "\n"
+                + "<h4>Motivo de la consulta:</h4>\n"
+                + "<h4>"+mailTurnoModel.getTipoConsulta()+ " - " +mailTurnoModel.getMotivoConsulta()+"</h4>\n"
+                + "\n"
+                + "<h4>Muchas gracias!!</h4>\n"
+                + "\n"
+                + "\n"
+                + "</body>\n"
+                + "</html>";
+
+        return html;
+    }
+
+    public String crearPlantillaParaProfesionalCancelacion(MailTurnoModel mailTurnoModel){
+        String html  ="<!DOCTYPE html>\n"
+                + "<html>\n"
+                + "<head>\n"
+                + "<style>\n"
+                + "table {\n"
+                + "  border-collapse: collapse;\n"
+                + "  width: 100%;\n"
+                + "}\n"
+                + "\n"
+                + "th, td {\n"
+                + "  text-align: left;\n"
+                + "  padding: 8px;\n"
+                + "}\n"
+                + "\n"
+                + "tr:nth-child(even){background-color: #f2f2f2}\n"
+                + "\n"
+                + "th {\n"
+                + "  background-color: #31572C;\n"
+                + "  color: white;\n"
+                + "}\n"
+                + "</style>\n"
+                + "</head>\n"
+                + "<body>\n"
+                + "\n"
+                + "<h2>Hola "+mailTurnoModel.getNombreProfecional()+"</h2>\n"
+                + "\n"
+                + "<h4>Te comunicamos que fue cancelado el turno para el " +mailTurnoModel.getFecha() + " a las " +mailTurnoModel.getHora()+" hs con " +mailTurnoModel.getNombrePaciente()+"("+mailTurnoModel.getDniPaciente()+") telefono: "+mailTurnoModel.getTelefonoPaciente()+"</h4>\n"
+                + "\n"
+                + "<h4>Motivo de la consulta:</h4>\n"
+                + "<h4>"+mailTurnoModel.getTipoConsulta()+ " - " +mailTurnoModel.getMotivoConsulta()+"</h4>\n"
+                + "\n"
+                + "\n"
+                + "<h4>El horario ya quedo disponible para un nuevo turno</h4>\n"
+                + "\n"
+                + "<h4>Muchas gracias!!</h4>\n"
+                + "\n"
+                + "\n"
+                + "</body>\n"
+                + "</html>";
+
+        return html;
+    }
+}

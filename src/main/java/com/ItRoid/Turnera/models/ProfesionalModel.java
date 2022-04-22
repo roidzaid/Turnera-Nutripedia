@@ -1,5 +1,10 @@
 package com.ItRoid.Turnera.models;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.sql.Blob;
+
 public class ProfesionalModel {
 
     private Long idProfesional;
@@ -10,12 +15,13 @@ public class ProfesionalModel {
     private String especialidad;
     private String mail;
     private String telefono;
-    private int valorConsulta;
+    private String valorConsulta;
+    private String foto;
 
     public ProfesionalModel() {
     }
 
-    public ProfesionalModel(Long idProfesional, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, int valorConsulta) {
+    public ProfesionalModel(Long idProfesional, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, String valorConsulta) {
         this.idProfesional = idProfesional;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -25,6 +31,7 @@ public class ProfesionalModel {
         this.mail = mail;
         this.telefono = telefono;
         this.valorConsulta = valorConsulta;
+        this.foto = foto;
     }
 
     public Long getIdProfesional() {
@@ -91,11 +98,19 @@ public class ProfesionalModel {
         this.telefono = telefono;
     }
 
-    public int getValorConsulta() {
+    public String getValorConsulta() {
         return valorConsulta;
     }
 
-    public void setValorConsulta(int valorConsulta) {
+    public void setValorConsulta(String valorConsulta) {
         this.valorConsulta = valorConsulta;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

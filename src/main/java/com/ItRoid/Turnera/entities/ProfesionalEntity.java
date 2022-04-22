@@ -3,6 +3,9 @@ package com.ItRoid.Turnera.entities;
 import org.hibernate.annotations.IndexColumn;
 
 import javax.persistence.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +44,10 @@ public class ProfesionalEntity {
     private String telefono;
 
     @Column(name = "valorConsulta")
-    private int valorConsulta;
+    private String valorConsulta;
+
+    @Column(name = "foto")
+    private String foto;
 
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="idProfesional")
@@ -50,7 +56,7 @@ public class ProfesionalEntity {
     public ProfesionalEntity() {
     }
 
-    public ProfesionalEntity(Date fechaAlta, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, int valorConsulta) {
+    public ProfesionalEntity(Date fechaAlta, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, String valorConsulta) {
         this.fechaAlta = fechaAlta;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -134,11 +140,11 @@ public class ProfesionalEntity {
         this.telefono = telefono;
     }
 
-    public int getValorConsulta() {
+    public String getValorConsulta() {
         return valorConsulta;
     }
 
-    public void setValorConsulta(int valorConsulta) {
+    public void setValorConsulta(String valorConsulta) {
         this.valorConsulta = valorConsulta;
     }
 
@@ -148,6 +154,14 @@ public class ProfesionalEntity {
 
     public void setHorarios(List<HorariosEntity> horarios) {
         this.horarios = horarios;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }
 

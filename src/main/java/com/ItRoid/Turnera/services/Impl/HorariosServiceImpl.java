@@ -43,26 +43,49 @@ public class HorariosServiceImpl implements HorariosService {
 
 
     @Override
-    public void modificarHorario(Long idHorario, HorariosModel horario) throws Exception {
+    public HorariosModel modificarHorario(Long idHorario, HorariosModel horario) throws Exception {
 
+        //formato de hora en 24hs
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+
+        //busco el horario a modificar
         HorariosEntity horariosEntity = this.horariosRepository.findByIdHorarios(idHorario);
 
-        Calendar calendar = Calendar.getInstance();
+        /*Calendar calendar = Calendar.getInstance();
 
         calendar.set(Calendar.AM_PM, Calendar.PM);
         calendar.set(Calendar.HOUR, horario.getHoraDesde());
         calendar.set(Calendar.MINUTE, horario.getMinutosDesde());
         calendar.set(Calendar.SECOND, 00);
 
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
-
+        //seteo el primer horario
         String horaDesde = format.format(calendar.getTime());
 
         calendar.set(Calendar.AM_PM, Calendar.PM);
         calendar.set(Calendar.HOUR, horario.getHoraHasta());
         calendar.set(Calendar.MINUTE, horario.getMinutosHasta());
         calendar.set(Calendar.SECOND, 00);
-        String horaHasta = format.format(calendar.getTime());
+
+        //seteo el ultimo horario
+        String horaHasta = format.format(calendar.getTime());*/
+
+        //seteo la variables desde y hasta con fecha y hora actual
+        Calendar desde = Calendar.getInstance();
+        Calendar hasta = Calendar.getInstance();
+
+        //coloco en desde la hora del primer turno
+        desde.set(Calendar.AM_PM, Calendar.AM);
+        desde.set(Calendar.HOUR, horario.getHoraDesde());
+        desde.set(Calendar.MINUTE, horario.getMinutosDesde());
+        desde.set(Calendar.SECOND, 00);
+        String horaDesde = format.format(desde.getTime());
+
+        //coloco en desde la hora de fin de ultimo turno
+        hasta.set(Calendar.AM_PM, Calendar.AM);
+        hasta.set(Calendar.HOUR, horario.getHoraHasta());
+        hasta.set(Calendar.MINUTE, horario.getMinutosHasta());
+        hasta.set(Calendar.SECOND, 00);
+        String horaHasta = format.format(hasta.getTime());
 
         horariosEntity.setDiaDeSemana(horario.getDiaDeSemana());
         horariosEntity.setTipoTurno(horario.getTipoTurno());
@@ -131,6 +154,8 @@ public class HorariosServiceImpl implements HorariosService {
         //borra la configuracion anterior
         borrarConfiguacionTurnos(listaBorrar);
 
+        return horario;
+
 
     }
 
@@ -153,6 +178,29 @@ public class HorariosServiceImpl implements HorariosService {
             throw new Exception("El profesional no tiene horarios cargados");
         }
 
+
+    }
+
+    @Override
+    public HorariosModel buscarHorariosXId(Long idHorario) throws Exception {
+
+        HorariosEntity horariosEntity = this.horariosRepository.findByIdHorarios(idHorario);
+
+        String[] horadesde = horariosEntity.getHoraDesde().split(":");
+        String[] horahasta = horariosEntity.getHoraHasta().split(":");
+
+        HorariosModel horariosModel = new HorariosModel(
+                horariosEntity.getIdHorario(),
+                horariosEntity.getDiaDeSemana(),
+                horariosEntity.getTipoTurno(),
+                Integer.parseInt(horadesde[0]),
+                Integer.parseInt(horadesde[1]),
+                Integer.parseInt(horahasta[0]),
+                Integer.parseInt(horahasta[1]),
+                horariosEntity.getDuracionTurnos()
+        );
+
+        return horariosModel;
 
     }
 
