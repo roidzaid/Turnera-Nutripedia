@@ -1,8 +1,7 @@
 package com.ItRoid.Turnera.controllers;
 
-import com.ItRoid.Turnera.models.EspecialidadModel;
-import com.ItRoid.Turnera.services.EspecialidadService;
-
+import com.ItRoid.Turnera.models.TipoTurnoModel;
+import com.ItRoid.Turnera.services.TipoTurnoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,27 +11,26 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
-@RequestMapping("especialidades")
-public class EspecialidadController {
+@RequestMapping("tipoTurno")
+public class TipoTurnoController {
 
-    Logger logger = LoggerFactory.getLogger(EspecialidadController.class);
+    Logger logger = LoggerFactory.getLogger(TipoTurnoController.class);
 
     @Autowired
-    private EspecialidadService especialidadService;
+    private TipoTurnoService tipoTurnoService;
 
     @GetMapping("/all")
-    public ResponseEntity<?> buscarEspecialidades() throws Exception{
+    public ResponseEntity<?> buscarTiposTurnos() throws Exception{
 
-        logger.info("Se listan las especialidades:");
+        logger.info("Se listan los tipos de turnos:");
 
         try {
 
-            List<EspecialidadModel> especilidades = this.especialidadService.buscarTodas();
+            List<TipoTurnoModel> tiposDeTurnos = this.tipoTurnoService.buscarTodos();
 
-            return new ResponseEntity<List<EspecialidadModel>>(especilidades, HttpStatus.OK);
+            return new ResponseEntity<List<TipoTurnoModel>>(tiposDeTurnos, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

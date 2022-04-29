@@ -15,13 +15,12 @@ public class ProfesionalModel {
     private String especialidad;
     private String mail;
     private String telefono;
-    private String valorConsulta;
-    private String foto;
+
 
     public ProfesionalModel() {
     }
 
-    public ProfesionalModel(Long idProfesional, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, String valorConsulta) {
+    public ProfesionalModel(Long idProfesional, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono) {
         this.idProfesional = idProfesional;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -30,8 +29,6 @@ public class ProfesionalModel {
         this.especialidad = especialidad;
         this.mail = mail;
         this.telefono = telefono;
-        this.valorConsulta = valorConsulta;
-        this.foto = foto;
     }
 
     public Long getIdProfesional() {
@@ -98,19 +95,4 @@ public class ProfesionalModel {
         this.telefono = telefono;
     }
 
-    public String getValorConsulta() {
-        return valorConsulta;
-    }
-
-    public void setValorConsulta(String valorConsulta) {
-        this.valorConsulta = valorConsulta;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
 }

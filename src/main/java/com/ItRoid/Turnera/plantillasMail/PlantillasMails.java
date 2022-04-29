@@ -78,7 +78,7 @@ public class PlantillasMails {
                 + "<h4>Le informamos que fue cancelado su turno para el " +mailTurnoModel.getFecha() + " a las " +mailTurnoModel.getHora()+" hs con " +mailTurnoModel.getNombreProfecional()+"("+mailTurnoModel.getEspecialidad()+")"+"</h4>\n"
                 + "\n"
                 + "\n"
-                + "<h4>Por favor solicitamos que vuelva a gestiones un turno por nuestra web o comunicarse al telefono "+mailTurnoModel.getTelefonoProfesional()+"/h4>\n"
+                + "<h4>Por favor solicitamos que vuelva a gestiones un turno por nuestra web o comunicarse al telefono "+mailTurnoModel.getTelefonoProfesional()+"</h4>\n"
                 + "\n"
                 + "<h4>Muchas gracias!!</h4>\n"
                 + "\n"

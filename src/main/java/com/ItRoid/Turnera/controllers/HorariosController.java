@@ -117,6 +117,21 @@ public class HorariosController {
         }
     }
 
+    @GetMapping("horariosTarjeta/{idProfesional}")
+    public ResponseEntity<?> horariosTarjeta(@PathVariable("idProfesional") Long idProfesional) throws Exception{
+
+        logger.info("Se buscas las fechas para el profesional :" + idProfesional);
+
+        try {
+
+            List<DiasAtencionModel> diasAtencion = this.horariosService.BuscarHorariosParaTarjeta(idProfesional);
+
+            return new ResponseEntity<List<DiasAtencionModel>>(diasAtencion, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @GetMapping("configuracionTurno/{idConfiguracionTurno}")
     public ResponseEntity<?> buscarConfiguracionTurnoXId(@PathVariable("idConfiguracionTurno") Long idConfiguracionTurno) throws Exception{

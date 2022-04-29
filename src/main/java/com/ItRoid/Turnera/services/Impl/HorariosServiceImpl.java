@@ -1,5 +1,6 @@
 package com.ItRoid.Turnera.services.Impl;
 
+import com.ItRoid.Turnera.controllers.HorariosController;
 import com.ItRoid.Turnera.entities.ConfiguracionTurnosEntity;
 import com.ItRoid.Turnera.entities.HorariosEntity;
 import com.ItRoid.Turnera.models.*;
@@ -7,19 +8,19 @@ import com.ItRoid.Turnera.repositories.ConfiguracionTurnosRepository;
 import com.ItRoid.Turnera.repositories.HorariosRepository;
 import com.ItRoid.Turnera.services.FeriadosService;
 import com.ItRoid.Turnera.services.HorariosService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class HorariosServiceImpl implements HorariosService {
 
+    Logger logger = LoggerFactory.getLogger(HorariosServiceImpl.class);
 
     @Autowired
     private HorariosRepository horariosRepository;
@@ -292,6 +293,22 @@ public class HorariosServiceImpl implements HorariosService {
                     .collect(Collectors.toList());
 
             return list;
+
+        }else{
+            throw new Exception("No existe horarios cargados para el profesional: " +  idProfesional);
+        }
+
+
+    }
+
+    @Override
+    public List<String> BuscarHorariosParaTarjeta(Long idProfesional) throws Exception {
+
+        List<String> dias = this.horariosRepository.diasAtencion(idProfesional);
+
+       if(dias!=null){
+
+            return dias;
 
         }else{
             throw new Exception("No existe horarios cargados para el profesional: " +  idProfesional);

@@ -43,11 +43,6 @@ public class ProfesionalEntity {
     @Column(name = "telefono")
     private String telefono;
 
-    @Column(name = "valorConsulta")
-    private String valorConsulta;
-
-    @Column(name = "foto")
-    private String foto;
 
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="idProfesional")
@@ -56,7 +51,7 @@ public class ProfesionalEntity {
     public ProfesionalEntity() {
     }
 
-    public ProfesionalEntity(Date fechaAlta, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, String valorConsulta) {
+    public ProfesionalEntity(Date fechaAlta, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono) {
         this.fechaAlta = fechaAlta;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -65,7 +60,7 @@ public class ProfesionalEntity {
         this.especialidad = especialidad;
         this.mail = mail;
         this.telefono = telefono;
-        this.valorConsulta = valorConsulta;
+
     }
 
     public Long getIdProfesional() {
@@ -140,14 +135,6 @@ public class ProfesionalEntity {
         this.telefono = telefono;
     }
 
-    public String getValorConsulta() {
-        return valorConsulta;
-    }
-
-    public void setValorConsulta(String valorConsulta) {
-        this.valorConsulta = valorConsulta;
-    }
-
     public List<HorariosEntity> getHorarios() {
         return horarios;
     }
@@ -156,13 +143,6 @@ public class ProfesionalEntity {
         this.horarios = horarios;
     }
 
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
 }
 
 

@@ -2,6 +2,11 @@ insert into especialidades (id_especialidad, especialidad) values ('001', 'PEDIA
 insert into especialidades (id_especialidad, especialidad) values ('002', 'NUTRICION');
 insert into especialidades (id_especialidad, especialidad) values ('003', 'PSICOLOGIA');
 
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('001', 'CONTROL DE ENFERMEDAD');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('002', 'CONTROL DE SALUD');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('003', 'PRIMERA VEZ');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('004', 'SEGUIMIENTO NUTRICION');
+
 
 insert into feriados (id_feriado, fecha, detalle) values ('001', '01-01-2022', 'Año Nuevo');
 insert into feriados (id_feriado, fecha, detalle) values ('002', '28-02-2022', 'Carnaval');

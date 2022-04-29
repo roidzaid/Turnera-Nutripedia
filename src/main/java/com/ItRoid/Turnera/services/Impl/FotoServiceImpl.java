@@ -1,6 +1,7 @@
 package com.ItRoid.Turnera.services.Impl;
 
 import com.ItRoid.Turnera.services.FotoService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,15 +15,15 @@ import java.nio.file.Paths;
 @Service
 public class FotoServiceImpl implements FotoService {
 
-    private final Path rootFolder = Paths.get("/imagenes");
+    @Value("${path.fotos}")
+    private String path;
 
-    Path pathAbsolute = Paths.get("/Proyectos/TurneraFront/imagenes");
-    Path pathBase = Paths.get("/Proyectos/TurneraFront");
-    Path pathRelative = pathBase.relativize(pathAbsolute);
 
 
     @Override
     public void subirFoto(MultipartFile foto) throws Exception {
+
+        Path pathAbsolute = Paths.get(path);
 
         String nombreFoto = foto.getOriginalFilename();
 
@@ -30,7 +31,7 @@ public class FotoServiceImpl implements FotoService {
 
         fotoVieja.delete();
 
-        Files.copy(foto.getInputStream(), this.pathAbsolute.resolve(nombreFoto));
+        Files.copy(foto.getInputStream(), pathAbsolute.resolve(nombreFoto));
 
     }
 

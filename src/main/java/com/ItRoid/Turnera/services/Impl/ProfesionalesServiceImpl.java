@@ -39,8 +39,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                 profesional.getMatricula(),
                 profesional.getEspecialidad(),
                 profesional.getMail(),
-                profesional.getTelefono(),
-                profesional.getValorConsulta()
+                profesional.getTelefono()
                 );
 
             this.profesionalesRepository.save(profesionalEntity);
@@ -72,8 +71,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getMatricula(),
                     profesionalEntity.getEspecialidad(),
                     profesionalEntity.getMail(),
-                    profesionalEntity.getTelefono(),
-                    profesionalEntity.getValorConsulta());
+                    profesionalEntity.getTelefono());
 
             return profesionalModel;
 
@@ -98,8 +96,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getMatricula(),
                     profesionalEntity.getEspecialidad(),
                     profesionalEntity.getMail(),
-                    profesionalEntity.getTelefono(),
-                    profesionalEntity.getValorConsulta());
+                    profesionalEntity.getTelefono());
 
             return profesionalModel;
 
@@ -126,8 +123,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getMatricula(),
                             e.getEspecialidad(),
                             e.getMail(),
-                            e.getTelefono(),
-                            e.getValorConsulta()))
+                            e.getTelefono()))
                     .collect(Collectors.toList());
 
 
@@ -155,8 +151,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getMatricula(),
                             e.getEspecialidad(),
                             e.getMail(),
-                            e.getTelefono(),
-                            e.getValorConsulta()))
+                            e.getTelefono()))
                     .collect(Collectors.toList());
 
 
@@ -182,8 +177,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                         e.getMatricula(),
                         e.getEspecialidad(),
                         e.getMail(),
-                        e.getTelefono(),
-                        e.getValorConsulta()))
+                        e.getTelefono()))
                 .collect(Collectors.toList());
 
 
@@ -205,8 +199,6 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
             profesionalEntity.setEspecialidad(profesional.getEspecialidad());
             profesionalEntity.setTelefono(profesional.getTelefono());
             profesionalEntity.setMail(profesional.getMail());
-            profesionalEntity.setValorConsulta(profesional.getValorConsulta());
-
 
             this.profesionalesRepository.save(profesionalEntity);
 

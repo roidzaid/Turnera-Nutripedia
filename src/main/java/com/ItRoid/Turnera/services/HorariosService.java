@@ -19,6 +19,8 @@ public interface HorariosService <T>{
 
     List<DiasAtencionModel> BuscarHorarios (Long idProfesional) throws Exception;
 
+    List<DiasAtencionModel> BuscarHorariosParaTarjeta (Long idProfesional) throws Exception;
+
     List<String> buscarTiposDeTurno(Long idProfesional) throws Exception;
 
     ConfiguracionTurnoModel buscarConfiguracionDeTurno(Long idConfiguracionTurno) throws Exception;

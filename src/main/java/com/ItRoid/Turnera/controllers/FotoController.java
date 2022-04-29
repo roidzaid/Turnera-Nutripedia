@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("fotos")
 public class FotoController {
 
-    Logger logger = LoggerFactory.getLogger(PacientesController.class);
+    Logger logger = LoggerFactory.getLogger(FotoController.class);
 
     @Autowired
     private FotoService fotoService;
@@ -29,8 +29,11 @@ public class FotoController {
 
             this.fotoService.subirFoto(multipartFile);
 
+            logger.info("Se guardo la foto correctamente");
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (Exception e){
+
+            logger.info("Error al guardar la foto " + e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

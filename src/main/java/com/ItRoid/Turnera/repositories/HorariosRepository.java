@@ -30,4 +30,10 @@ public interface HorariosRepository extends JpaRepository<HorariosEntity, Long> 
             nativeQuery = true)
     List<String> findTipoTurnos(Long idProfesional);
 
+    @Query(
+            value = "SELECT dia_de_semana FROM horarios h WHERE h.id_Profesional = ?1 group by dia_de_semana;",
+            nativeQuery = true)
+    List<String> diasAtencion(Long idProfesional);
+
+
 }

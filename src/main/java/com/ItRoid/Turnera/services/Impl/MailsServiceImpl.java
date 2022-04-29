@@ -1,15 +1,20 @@
 package com.ItRoid.Turnera.services.Impl;
 
-import com.ItRoid.Turnera.models.MailTurnoModel;
+import com.ItRoid.Turnera.controllers.FotoController;
 import com.ItRoid.Turnera.services.MailsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,14 +25,24 @@ import java.util.Set;
 @Service
 public class MailsServiceImpl implements MailsService {
 
-    private static String remitente = "roidzaid@gmail.com";
-    private static String clave = "nhusznjjcuxrentv";
+    Logger logger = LoggerFactory.getLogger(FotoController.class);
+
+    @Value("${mail.nutripedia}")
+    private String remitente;
+
+    @Value("${clave.nutripedia}")
+    private String clave;
+
+    //private static String remitente = "roidzaid@gmail.com";
+    //private static String clave = "nhusznjjcuxrentv";
 
     @Autowired
     private JavaMailSender javaMailSender;
 
     @Override
     public void enviarMail(String destinatario, String plantilla) {
+
+        logger.info("Se envian los mail");
 
             Properties props = System.getProperties();
             props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
@@ -64,7 +79,7 @@ public class MailsServiceImpl implements MailsService {
                 Multipart multipart = new MimeMultipart();
                 multipart.addBodyPart(messageBodyPart);
 
-                if (mapInlineImages != null && mapInlineImages.size() > 0) {
+                /*if (mapInlineImages != null && mapInlineImages.size() > 0) {
                     Set<String> setImageID = mapInlineImages.keySet();
 
                     for (String contentId : setImageID) {
@@ -81,7 +96,7 @@ public class MailsServiceImpl implements MailsService {
 
                         multipart.addBodyPart(imagePart);
                     }
-                }
+                }*/
 
                 message.setContent(multipart);
 
@@ -91,14 +106,10 @@ public class MailsServiceImpl implements MailsService {
                 transport.close();
             }
             catch (MessagingException me) {
+                logger.info("error en el envio de mail: " + me);
                 me.printStackTrace();   //Si se produce un error
             }
 
     }
-
-   //plantilla de mail
-
-
-
 
 }
