@@ -8,6 +8,7 @@ import com.ItRoid.Turnera.repositories.ConfiguracionTurnosRepository;
 import com.ItRoid.Turnera.repositories.HorariosRepository;
 import com.ItRoid.Turnera.services.FeriadosService;
 import com.ItRoid.Turnera.services.HorariosService;
+import com.ItRoid.Turnera.services.LicenciasService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class HorariosServiceImpl implements HorariosService {
 
     @Autowired
     private FeriadosService feriadosService;
+
+    @Autowired
+    private LicenciasService licenciasService;
 
 
     @Override
@@ -253,7 +257,7 @@ public class HorariosServiceImpl implements HorariosService {
 
                     String fechaDisponible = format.format(fecha.getTime());
 
-                    if (!feriadosService.buscarFeriado(fechaDisponible)) {
+                    if (!feriadosService.buscarFeriado(fechaDisponible) && !licenciasService.buscarDiaEnLicencias(idProfesional, fechaDisponible)) {
 
                         DiasDisponiblesModel diasDisponibles = new DiasDisponiblesModel(
                                 horariosEntity.get(i).getIdHorario(),

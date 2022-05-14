@@ -5,6 +5,7 @@ import com.ItRoid.Turnera.models.*;
 import com.ItRoid.Turnera.plantillasMail.PlantillasMails;
 import com.ItRoid.Turnera.repositories.*;
 import com.ItRoid.Turnera.services.HorariosService;
+import com.ItRoid.Turnera.services.LicenciasService;
 import com.ItRoid.Turnera.services.MailsService;
 import com.ItRoid.Turnera.services.TurnosService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class TurnosServiceImpl implements TurnosService {
 
     @Autowired
     private MailsService mailsService;
+
+    @Autowired
+    private LicenciasService licenciasService;
 
 
     @Override
@@ -111,7 +115,11 @@ public class TurnosServiceImpl implements TurnosService {
         PlantillasMails platilla = new PlantillasMails();
 
         //Enviar mail a paciente
-        mailsService.enviarMail(pacienteEntity.getMail(), platilla.crearPlantillaParaPaciente(mailTurnoModel));
+        if (asignarTurnoModel.getTipoConsulta().equals("CONSULTA VIRTUAL")){
+            mailsService.enviarMail(pacienteEntity.getMail(), platilla.crearPlantillaParaPacienteTurnoVirtual(mailTurnoModel));
+        }else{
+            mailsService.enviarMail(pacienteEntity.getMail(), platilla.crearPlantillaParaPaciente(mailTurnoModel));
+        }
 
         //Enviar mail a profesional
         mailsService.enviarMail(profesionalEntity.getMail(), platilla.crearPlantillaParaProfesional(mailTurnoModel));

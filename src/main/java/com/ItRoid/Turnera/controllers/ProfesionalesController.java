@@ -154,23 +154,18 @@ public class ProfesionalesController {
 
 
 //horarios
-@PutMapping("/horario/{dni}")
-public ResponseEntity<?> agregarHorarios(@PathVariable("dni") Long idProfesional, @RequestBody HorariosModel horariosModel) throws Exception  {
+    @PutMapping("/horario/{dni}")
+    public ResponseEntity<?> agregarHorarios(@PathVariable("dni") Long idProfesional, @RequestBody HorariosModel horariosModel) throws Exception  {
 
-    logger.info("Se agrega horario para el profesional: " + idProfesional);
+        logger.info("Se agrega horario para el profesional: " + idProfesional);
 
-    try {
-        this.profesionalesService.agregarHorarios(idProfesional, horariosModel);
+        try {
+            this.profesionalesService.agregarHorarios(idProfesional, horariosModel);
 
-        return new ResponseEntity<HorariosModel>(horariosModel, HttpStatus.CREATED);
-    }catch (Exception e){
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<HorariosModel>(horariosModel, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-}
-
-
-
-
-
 
 }

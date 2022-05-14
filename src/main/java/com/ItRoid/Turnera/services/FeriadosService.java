@@ -4,7 +4,7 @@ import com.ItRoid.Turnera.entities.FeriadosEntity;
 
 import java.util.List;
 
-public interface FeriadosService <T>{
+public interface  FeriadosService <T>{
 
     void crearFeriado(FeriadosEntity feriadosEntity);
 
