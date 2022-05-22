@@ -12,11 +12,12 @@ public class HorariosModel {
     private int horaHasta;
     private int minutosHasta;
     private int duracionTurnos;
+    private String fechaHorarioEventual;
 
     public HorariosModel() {
     }
 
-    public HorariosModel(Long idHorario, String diaDeSemana, String tipoTurno, int horaDesde, int minutosDesde, int horaHasta, int minutosHasta, int duracionTurnos) {
+    public HorariosModel(Long idHorario, String diaDeSemana, String tipoTurno, int horaDesde, int minutosDesde, int horaHasta, int minutosHasta, int duracionTurnos, String fechaHorarioEventual) {
         this.idHorario = idHorario;
         this.diaDeSemana = diaDeSemana;
         this.tipoTurno = tipoTurno;
@@ -25,6 +26,7 @@ public class HorariosModel {
         this.horaHasta = horaHasta;
         this.minutosHasta = minutosHasta;
         this.duracionTurnos = duracionTurnos;
+        this.fechaHorarioEventual = fechaHorarioEventual;
     }
 
     public Long getIdHorario() {
@@ -89,5 +91,13 @@ public class HorariosModel {
 
     public void setDuracionTurnos(int duracionTurnos) {
         this.duracionTurnos = duracionTurnos;
+    }
+
+    public String getFechaHorarioEventual() {
+        return fechaHorarioEventual;
+    }
+
+    public void setFechaHorarioEventual(String fechaHorarioEventual) {
+        this.fechaHorarioEventual = fechaHorarioEventual;
     }
 }

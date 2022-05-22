@@ -24,4 +24,6 @@ public interface HorariosService <T>{
     List<String> buscarTiposDeTurno(Long idProfesional) throws Exception;
 
     ConfiguracionTurnoModel buscarConfiguracionDeTurno(Long idConfiguracionTurno) throws Exception;
+
+    boolean esEventual(Long idProfesional, String fecha);
 }

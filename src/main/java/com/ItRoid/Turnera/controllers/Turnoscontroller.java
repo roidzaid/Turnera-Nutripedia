@@ -83,6 +83,21 @@ public class Turnoscontroller {
         }
     }
 
+    @GetMapping("/agenda/{idProfesional}/{fecha}")
+    public ResponseEntity<?> agenda(@PathVariable("idProfesional") Long idProfesional, @PathVariable("fecha") String fecha) throws Exception{
+
+        logger.info("Buscar agenda de : " + idProfesional);
+
+        try {
+
+            List<TurnoAsignadoModel> agenda = this.turnosService.agenda(idProfesional, fecha);
+
+            return new ResponseEntity<List<TurnoAsignadoModel>>(agenda, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/{idTurnoAsignado}")
     public ResponseEntity<?> cancelarTurno(@PathVariable("idTurnoAsignado") Long idTurnoAsignado) throws Exception{
 

@@ -39,7 +39,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                 profesional.getMatricula(),
                 profesional.getEspecialidad(),
                 profesional.getMail(),
-                profesional.getTelefono()
+                profesional.getTelefono(),
+                profesional.getInstagram()
                 );
 
             this.profesionalesRepository.save(profesionalEntity);
@@ -71,7 +72,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getMatricula(),
                     profesionalEntity.getEspecialidad(),
                     profesionalEntity.getMail(),
-                    profesionalEntity.getTelefono());
+                    profesionalEntity.getTelefono(),
+                    profesionalEntity.getInstagram());
 
             return profesionalModel;
 
@@ -96,7 +98,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getMatricula(),
                     profesionalEntity.getEspecialidad(),
                     profesionalEntity.getMail(),
-                    profesionalEntity.getTelefono());
+                    profesionalEntity.getTelefono(),
+                    profesionalEntity.getInstagram());
 
             return profesionalModel;
 
@@ -123,7 +126,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getMatricula(),
                             e.getEspecialidad(),
                             e.getMail(),
-                            e.getTelefono()))
+                            e.getTelefono(),
+                            e.getInstagram()))
                     .collect(Collectors.toList());
 
 
@@ -151,7 +155,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getMatricula(),
                             e.getEspecialidad(),
                             e.getMail(),
-                            e.getTelefono()))
+                            e.getTelefono(),
+                            e.getInstagram()))
                     .collect(Collectors.toList());
 
 
@@ -177,7 +182,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                         e.getMatricula(),
                         e.getEspecialidad(),
                         e.getMail(),
-                        e.getTelefono()))
+                        e.getTelefono(),
+                        e.getInstagram()))
                 .collect(Collectors.toList());
 
 
@@ -199,6 +205,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
             profesionalEntity.setEspecialidad(profesional.getEspecialidad());
             profesionalEntity.setTelefono(profesional.getTelefono());
             profesionalEntity.setMail(profesional.getMail());
+            profesionalEntity.setInstagram(profesional.getInstagram());
 
             this.profesionalesRepository.save(profesionalEntity);
 
@@ -258,6 +265,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
         horarioEntity.setHoraDesde(horaDesde);
         horarioEntity.setHoraHasta(horaHasta);
         horarioEntity.setDuracionTurnos(horario.getDuracionTurnos());
+
+        //fecha de horarios eventual - si eventual se imforma la fecha
+        horarioEntity.setFechaHorarioEventual(horario.getFechaHorarioEventual());
 
         //configuracion de turnos
         int horaSig = horario.getHoraDesde();

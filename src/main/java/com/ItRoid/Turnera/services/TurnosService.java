@@ -17,6 +17,8 @@ public interface TurnosService<T>{
 
     List<TurnoAsignadoModel> agenda(Long idProfesional) throws Exception;
 
+    List<TurnoAsignadoModel> agenda(Long idProfesional, String fecha) throws Exception;
+
     void cancelarTurno(Long idTurnoAsignado) throws Exception;
 
     TurnoAsignadoModel buscarTurno(Long idTurnoAsignado) throws Exception;

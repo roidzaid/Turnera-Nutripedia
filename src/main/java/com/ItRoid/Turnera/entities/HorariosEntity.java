@@ -32,6 +32,9 @@ public class HorariosEntity {
     @Column(name = "duracionTurnos")
     private int duracionTurnos;
 
+    @Column(name = "fechaHorarioEventual")
+    private String fechaHorarioEventual;
+
     @ManyToOne
     @JoinColumn(name="idProfesional")
     private ProfesionalEntity profesional ;
@@ -43,7 +46,7 @@ public class HorariosEntity {
     public HorariosEntity() {
     }
 
-    public HorariosEntity(Date fechaAlta, String diaDeSemana, String tipoTurno, String horaDesde, String horaHasta, int duracionTurnos, ProfesionalEntity profesional, List<ConfiguracionTurnosEntity> configuracionTurnos) {
+    public HorariosEntity(Date fechaAlta, String diaDeSemana, String tipoTurno, String horaDesde, String horaHasta, int duracionTurnos, String fechaHorarioEventual,ProfesionalEntity profesional, List<ConfiguracionTurnosEntity> configuracionTurnos) {
         this.fechaAlta = fechaAlta;
         this.diaDeSemana = diaDeSemana;
         this.tipoTurno = tipoTurno;
@@ -52,6 +55,7 @@ public class HorariosEntity {
         this.duracionTurnos = duracionTurnos;
         this.profesional = profesional;
         this.configuracionTurnos = configuracionTurnos;
+        this.fechaHorarioEventual = fechaHorarioEventual;
     }
 
     public Long getIdHorario() {
@@ -124,5 +128,13 @@ public class HorariosEntity {
 
     public void setConfiguracionTurnos(List<ConfiguracionTurnosEntity> configuracionTurnos) {
         this.configuracionTurnos = configuracionTurnos;
+    }
+
+    public String getFechaHorarioEventual() {
+        return fechaHorarioEventual;
+    }
+
+    public void setFechaHorarioEventual(String fechaHorarioEventual) {
+        this.fechaHorarioEventual = fechaHorarioEventual;
     }
 }

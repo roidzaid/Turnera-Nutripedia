@@ -43,6 +43,9 @@ public class ProfesionalEntity {
     @Column(name = "telefono")
     private String telefono;
 
+    @Column(name = "instagram")
+    private String instagram;
+
 
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="idProfesional")
@@ -51,7 +54,7 @@ public class ProfesionalEntity {
     public ProfesionalEntity() {
     }
 
-    public ProfesionalEntity(Date fechaAlta, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono) {
+    public ProfesionalEntity(Date fechaAlta, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, String instagram) {
         this.fechaAlta = fechaAlta;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -60,6 +63,7 @@ public class ProfesionalEntity {
         this.especialidad = especialidad;
         this.mail = mail;
         this.telefono = telefono;
+        this.instagram = instagram;
 
     }
 
@@ -143,6 +147,13 @@ public class ProfesionalEntity {
         this.horarios = horarios;
     }
 
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
 }
 
 

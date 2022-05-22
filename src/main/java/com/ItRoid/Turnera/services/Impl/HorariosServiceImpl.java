@@ -56,24 +56,6 @@ public class HorariosServiceImpl implements HorariosService {
         //busco el horario a modificar
         HorariosEntity horariosEntity = this.horariosRepository.findByIdHorarios(idHorario);
 
-        /*Calendar calendar = Calendar.getInstance();
-
-        calendar.set(Calendar.AM_PM, Calendar.PM);
-        calendar.set(Calendar.HOUR, horario.getHoraDesde());
-        calendar.set(Calendar.MINUTE, horario.getMinutosDesde());
-        calendar.set(Calendar.SECOND, 00);
-
-        //seteo el primer horario
-        String horaDesde = format.format(calendar.getTime());
-
-        calendar.set(Calendar.AM_PM, Calendar.PM);
-        calendar.set(Calendar.HOUR, horario.getHoraHasta());
-        calendar.set(Calendar.MINUTE, horario.getMinutosHasta());
-        calendar.set(Calendar.SECOND, 00);
-
-        //seteo el ultimo horario
-        String horaHasta = format.format(calendar.getTime());*/
-
         //seteo la variables desde y hasta con fecha y hora actual
         Calendar desde = Calendar.getInstance();
         Calendar hasta = Calendar.getInstance();
@@ -97,6 +79,8 @@ public class HorariosServiceImpl implements HorariosService {
         horariosEntity.setHoraDesde(horaDesde);
         horariosEntity.setHoraHasta(horaHasta);
         horariosEntity.setDuracionTurnos(horario.getDuracionTurnos());
+
+        horariosEntity.setFechaHorarioEventual(horario.getFechaHorarioEventual());
 
         //configuracion de turnos
         int horaSig = horario.getHoraDesde();
@@ -202,7 +186,8 @@ public class HorariosServiceImpl implements HorariosService {
                 Integer.parseInt(horadesde[1]),
                 Integer.parseInt(horahasta[0]),
                 Integer.parseInt(horahasta[1]),
-                horariosEntity.getDuracionTurnos()
+                horariosEntity.getDuracionTurnos(),
+                horariosEntity.getFechaHorarioEventual()
         );
 
         return horariosModel;
@@ -257,15 +242,30 @@ public class HorariosServiceImpl implements HorariosService {
 
                     String fechaDisponible = format.format(fecha.getTime());
 
-                    if (!feriadosService.buscarFeriado(fechaDisponible) && !licenciasService.buscarDiaEnLicencias(idProfesional, fechaDisponible)) {
+                    String  fechaEven = horariosEntity.get(i).getFechaHorarioEventual();
 
-                        DiasDisponiblesModel diasDisponibles = new DiasDisponiblesModel(
-                                horariosEntity.get(i).getIdHorario(),
-                                diaDeSemana,
-                                fechaDisponible
-                        );
+                    if(fechaEven==null || fechaEven.equals("")){
 
-                        DiasDisponibles.add(diasDisponibles);
+                        if (!feriadosService.buscarFeriado(fechaDisponible) && !licenciasService.buscarDiaEnLicencias(idProfesional, fechaDisponible)) {
+
+                            DiasDisponiblesModel diasDisponibles = new DiasDisponiblesModel(
+                                    horariosEntity.get(i).getIdHorario(),
+                                    diaDeSemana,
+                                    fechaDisponible
+                            );
+
+                            DiasDisponibles.add(diasDisponibles);
+                        }
+                    }else{
+
+                        if(esEventual(idProfesional, fechaDisponible)){
+                            DiasDisponiblesModel diasDisponibles = new DiasDisponiblesModel(
+                                    horariosEntity.get(i).getIdHorario(),
+                                    diaDeSemana,
+                                    fechaDisponible
+                            );
+                            DiasDisponibles.add(diasDisponibles);
+                        }
                     }
                 }
 
@@ -275,6 +275,19 @@ public class HorariosServiceImpl implements HorariosService {
         }
 
         return DiasDisponibles;
+    }
+
+    @Override
+    public boolean esEventual(Long idProfesional, String fecha){
+        boolean esEventual = false;
+
+        HorariosEntity h = this.horariosRepository.esHoararioEventual(idProfesional, fecha);
+
+        if (h!=null){
+            esEventual = true;
+        }
+
+        return esEventual;
     }
 
     @Override
@@ -293,7 +306,8 @@ public class HorariosServiceImpl implements HorariosService {
                             e.getTipoTurno(),
                             e.getHoraDesde(),
                             e.getHoraHasta(),
-                            e.getDuracionTurnos()))
+                            e.getDuracionTurnos(),
+                            e.getFechaHorarioEventual()))
                     .collect(Collectors.toList());
 
             return list;
