@@ -31,6 +31,11 @@ public interface ProfesionalesRepository extends JpaRepository<ProfesionalEntity
             nativeQuery = true)
     List<ProfesionalEntity> findByEspecialidad(String especialidad);
 
+    @Query(
+            value = "SELECT * FROM profesionales pro WHERE pro.usuario = ?1",
+            nativeQuery = true)
+    ProfesionalEntity findByUsuario(String usuario);
+
 
     @Query(
             value = "SELECT * FROM horarios h WHERE h.id_consultorio = ?1 and h.dia_de_semana = ?2 and h.hora_desde = ?3",

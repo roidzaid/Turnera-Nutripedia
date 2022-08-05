@@ -90,7 +90,7 @@ public class HorariosController {
     @GetMapping("fechas/{idProfesional}/{tipoTurno}")
     public ResponseEntity<?> buscarFechas(@PathVariable("idProfesional") Long idProfesional, @PathVariable("tipoTurno") String tipoTurno) throws Exception{
 
-        logger.info("Se buscas las fechas para el profesional :" + idProfesional);
+        logger.info("Se busca las fechas para el profesional :" + idProfesional);
 
         try {
 

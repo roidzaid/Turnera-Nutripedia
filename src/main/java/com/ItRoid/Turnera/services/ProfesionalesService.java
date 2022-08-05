@@ -18,6 +18,7 @@ public interface ProfesionalesService<T>{
     List<ProfesionalModel> buscarProfesionalXEspecialidad(String especialidad) throws Exception;
 
     ProfesionalModel buscarProfesionalxId(Long idProfesional) throws Exception;
+    ProfesionalModel buscarProfesionalxUsuario(String usuario) throws Exception;
 
     List<ProfesionalModel> buscarProfesionalAll() throws Exception;
 
@@ -25,6 +26,9 @@ public interface ProfesionalesService<T>{
     void borrarProfesional(String dni) throws Exception;
 
     void agregarHorarios (Long idProfesional, HorariosModel horarios) throws Exception;
+
+
+    void modificarUsuario(String usuario, Long idProfesional) throws Exception;
 
 
 }

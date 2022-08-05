@@ -7,7 +7,7 @@ public interface PacientesService<T>{
 
     PacienteModel crearPaciente (PacienteModel paciente) throws Exception;
     PacienteModel BuscarPaciente (String dni);
-
     PacienteModel BuscarPacientexId (Long id);
+    PacienteModel modificarPaciente (PacienteModel paciente) throws Exception;
 
 }

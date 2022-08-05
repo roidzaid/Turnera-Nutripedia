@@ -236,6 +236,8 @@ public class HorariosServiceImpl implements HorariosService {
                     break;
             }
 
+            boolean controlTurnoEventual = false;
+
             for(int i = 0; horariosEntity.size() > i; i++){
 
                 if (diaDeSemana.equals(horariosEntity.get(i).getDiaDeSemana())){
@@ -258,12 +260,13 @@ public class HorariosServiceImpl implements HorariosService {
                         }
                     }else{
 
-                        if(esEventual(idProfesional, fechaDisponible)){
+                        if(esEventual(idProfesional, fechaDisponible) && !controlTurnoEventual){
                             DiasDisponiblesModel diasDisponibles = new DiasDisponiblesModel(
                                     horariosEntity.get(i).getIdHorario(),
                                     diaDeSemana,
                                     fechaDisponible
                             );
+                            controlTurnoEventual = true;
                             DiasDisponibles.add(diasDisponibles);
                         }
                     }

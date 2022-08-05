@@ -67,4 +67,19 @@ public class PacientesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping()
+    public ResponseEntity<?> modificarPaciente(@RequestBody PacienteModel pacienteModel) throws Exception  {
+
+        logger.info("Se modifica paciente: " + pacienteModel.getIdPaciente());
+
+        try {
+            PacienteModel pacientel =  this.pacientesService.modificarPaciente(pacienteModel);
+
+            return new ResponseEntity<PacienteModel>(pacientel, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }

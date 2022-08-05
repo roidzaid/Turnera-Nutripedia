@@ -40,7 +40,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                 profesional.getEspecialidad(),
                 profesional.getMail(),
                 profesional.getTelefono(),
-                profesional.getInstagram()
+                profesional.getInstagram(),
+                profesional.getUsuario()
                 );
 
             this.profesionalesRepository.save(profesionalEntity);
@@ -73,7 +74,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getEspecialidad(),
                     profesionalEntity.getMail(),
                     profesionalEntity.getTelefono(),
-                    profesionalEntity.getInstagram());
+                    profesionalEntity.getInstagram(),
+                    profesionalEntity.getUsuario());
 
             return profesionalModel;
 
@@ -99,7 +101,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getEspecialidad(),
                     profesionalEntity.getMail(),
                     profesionalEntity.getTelefono(),
-                    profesionalEntity.getInstagram());
+                    profesionalEntity.getInstagram(),
+                    profesionalEntity.getUsuario());
 
             return profesionalModel;
 
@@ -107,6 +110,32 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
             throw new Exception("No existe ningun profesional con id: " +  idProfesional);
         }
 
+    }
+
+    @Override
+    public ProfesionalModel buscarProfesionalxUsuario(String usuario) throws Exception {
+
+        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByUsuario(usuario);
+
+        if (profesionalEntity != null) {
+
+            ProfesionalModel profesionalModel = new ProfesionalModel(
+                    profesionalEntity.getIdProfesional(),
+                    profesionalEntity.getNombre(),
+                    profesionalEntity.getApellido(),
+                    profesionalEntity.getDni(),
+                    profesionalEntity.getMatricula(),
+                    profesionalEntity.getEspecialidad(),
+                    profesionalEntity.getMail(),
+                    profesionalEntity.getTelefono(),
+                    profesionalEntity.getInstagram(),
+                    profesionalEntity.getUsuario());
+
+            return profesionalModel;
+
+        }else{
+            throw new Exception("No existe ningun profesional con usuario: " +  usuario);
+        }
     }
 
     @Override
@@ -127,7 +156,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getEspecialidad(),
                             e.getMail(),
                             e.getTelefono(),
-                            e.getInstagram()))
+                            e.getInstagram(),
+                            e.getUsuario()))
                     .collect(Collectors.toList());
 
 
@@ -156,7 +186,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getEspecialidad(),
                             e.getMail(),
                             e.getTelefono(),
-                            e.getInstagram()))
+                            e.getInstagram(),
+                            e.getUsuario()))
                     .collect(Collectors.toList());
 
 
@@ -183,7 +214,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                         e.getEspecialidad(),
                         e.getMail(),
                         e.getTelefono(),
-                        e.getInstagram()))
+                        e.getInstagram(),
+                        e.getUsuario()))
                 .collect(Collectors.toList());
 
 
@@ -329,6 +361,24 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
 
         //guardo profesional
         this.profesionalesRepository.save(profesionalEntity);
+
+    }
+
+    @Override
+    public void modificarUsuario(String usuario, Long idProfesional) throws Exception {
+
+        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByidProfesional(idProfesional);
+
+
+        if (profesionalEntity != null) {
+
+            profesionalEntity.setUsuario(usuario);
+
+            this.profesionalesRepository.save(profesionalEntity);
+
+        }else{
+            throw new Exception("No existe ningun profesional con dni: " +  idProfesional);
+        }
 
     }
 

@@ -94,6 +94,21 @@ public class ProfesionalesController {
         }
     }
 
+    @GetMapping("/usuario/{usuario}")
+    public ResponseEntity<?> buscarProfesionalByUsuario(@PathVariable("usuario") String usuario) throws Exception{
+
+        logger.info("Se busca profesional por usuario: " + usuario);
+
+        try {
+
+            ProfesionalModel profesional = this.profesionalesService.buscarProfesionalxUsuario(usuario);
+
+            return new ResponseEntity<ProfesionalModel>(profesional, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/nomyape/{nombre}/{apellido}")
     public ResponseEntity<?> buscarProfesionalByNomYApe(@PathVariable("nombre") String nombre, @PathVariable("apellido") String apellido) throws Exception{
 
@@ -133,6 +148,20 @@ public class ProfesionalesController {
             ProfesionalModel profesional = this.profesionalesService.modificarProfesional(profesionalModel, idProfesional);
 
             return new ResponseEntity<ProfesionalModel>(profesional, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("usuario/{idProfesional}/{usuario}")
+    public ResponseEntity<?> modificarUsuario(@PathVariable("idProfesional") Long idProfesional, @PathVariable("usuario") String usuario) throws Exception  {
+
+        logger.info("Se modifica usuario para el profesional");
+
+        try {
+            this.profesionalesService.modificarUsuario(usuario, idProfesional);
+
+            return new ResponseEntity<String>("usuario actualizado", HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

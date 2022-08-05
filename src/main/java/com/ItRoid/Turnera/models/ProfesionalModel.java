@@ -16,12 +16,13 @@ public class ProfesionalModel {
     private String mail;
     private String telefono;
     private String instagram;
+    private String usuario;
 
 
     public ProfesionalModel() {
     }
 
-    public ProfesionalModel(Long idProfesional, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, String instagram) {
+    public ProfesionalModel(Long idProfesional, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, String instagram, String usuario) {
         this.idProfesional = idProfesional;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -31,6 +32,7 @@ public class ProfesionalModel {
         this.mail = mail;
         this.telefono = telefono;
         this.instagram = instagram;
+        this.usuario = usuario;;
     }
 
     public Long getIdProfesional() {
@@ -103,5 +105,13 @@ public class ProfesionalModel {
 
     public void setInstagram(String instagram) {
         this.instagram = instagram;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 }

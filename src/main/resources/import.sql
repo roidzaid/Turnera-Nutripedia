@@ -1,6 +1,9 @@
 insert into especialidades (id_especialidad, especialidad) values ('001', 'PEDIATRIA');
 insert into especialidades (id_especialidad, especialidad) values ('002', 'NUTRICION');
-insert into especialidades (id_especialidad, especialidad) values ('003', 'OFTALMOLOGIA');
+insert into especialidades (id_especialidad, especialidad) values ('003', 'OFTALMOLOGIA INFANTIL');
+insert into especialidades (id_especialidad, especialidad) values ('004', 'NEUMONOLOGIA INFANTIL');
+insert into especialidades (id_especialidad, especialidad) values ('005', 'GASTROENTEROLOGIA INFANTIL');
+insert into especialidades (id_especialidad, especialidad) values ('006', 'DERMATOLOGIA INFANTIL');
 
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('001', 'CONTROL DE ENFERMEDAD');
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('002', 'CONTROL DE SALUD');

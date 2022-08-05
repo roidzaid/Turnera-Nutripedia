@@ -91,4 +91,29 @@ public class PacientesServiceImpl implements PacientesService {
         }
 
     }
+
+    @Override
+    public PacienteModel modificarPaciente(PacienteModel paciente) throws Exception {
+
+        PacienteEntity pe = this.pacientesRepository.findByIdPaciente(paciente.getIdPaciente());
+
+        if(pe!=null) {
+
+            pe.setFechaAlta(Date.from(Instant.now()));
+            pe.setNombre(paciente.getNombre());
+            pe.setApellido(paciente.getApellido());
+            pe.setDni(paciente.getDni());
+            pe.setFechaNac(paciente.getFechaNac());
+            pe.setDireccion(paciente.getDireccion());
+            pe.setLocalidad(paciente.getLocalidad());
+            pe.setTelefono(paciente.getTelefono());
+            pe.setMail(paciente.getMail());
+
+            this.pacientesRepository.save(pe);
+
+            return paciente;
+        }else{
+            throw new Exception("el paciente no existe");
+        }
+    }
 }
