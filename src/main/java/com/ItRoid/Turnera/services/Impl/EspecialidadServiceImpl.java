@@ -26,10 +26,77 @@ public class EspecialidadServiceImpl implements EspecialidadService {
         List<EspecialidadModel> list = especialidadEntities
                 .stream()
                 .map((e) -> new EspecialidadModel(
+                        e.getIdEspecialidad(),
                         e.getEspecialidad()))
                 .collect(Collectors.toList());
 
         return list;
 
+    }
+
+    @Override
+    public void crearEspecialidad(EspecialidadModel especialidadModel) throws Exception {
+
+        EspecialidadEntity especialidadEntity = this.especialidadRespository.findByIdEspecialidad(especialidadModel.getEspecialidad());
+
+        if (especialidadEntity == null) {
+            EspecialidadEntity e = new EspecialidadEntity(
+                    especialidadModel.getEspecialidad()
+            );
+
+            this.especialidadRespository.save(e);
+
+        }else{
+        throw new Exception("Ya fue dada de alta " + especialidadEntity.getEspecialidad());
+    }
+
+    }
+
+    @Override
+    public void eliminarEspecialidad(Long idEspecialidad) throws Exception {
+
+        EspecialidadEntity especialidadEntity = this.especialidadRespository.findByIdEspecialidad(idEspecialidad);
+
+        if (especialidadEntity != null) {
+
+            this.especialidadRespository.delete(especialidadEntity);
+
+        }else{
+            throw new Exception("No existe especialidad " + idEspecialidad);
+        }
+
+    }
+
+    @Override
+    public EspecialidadModel buscarEspecialidad(Long idEspecialidad) throws Exception {
+
+        EspecialidadEntity especialidadEntity = this.especialidadRespository.findByIdEspecialidad(idEspecialidad);
+
+        if (especialidadEntity != null) {
+
+            EspecialidadModel especialidadModel = new EspecialidadModel(
+                    especialidadEntity.getIdEspecialidad(),
+                    especialidadEntity.getEspecialidad());
+
+            return especialidadModel;
+
+        }else{
+            throw new Exception("No existe especialidad " + idEspecialidad);
+        }
+    }
+
+    @Override
+    public void modificarEspecialidad(Long idEspecialidad, EspecialidadModel especialidadModel) throws Exception {
+
+        EspecialidadEntity especialidadEntity = this.especialidadRespository.findByIdEspecialidad(idEspecialidad);
+
+        if (especialidadEntity == null) {
+            especialidadEntity.setEspecialidad(especialidadModel.getEspecialidad());
+
+            this.especialidadRespository.save(especialidadEntity);
+
+        }else{
+            throw new Exception("No existe especialidad " + especialidadEntity.getEspecialidad());
+        }
     }
 }

@@ -19,7 +19,7 @@ public interface TurnosAsignadosRepository extends JpaRepository<TurnoAsignadoEn
     TurnoAsignadoEntity findByTurnosAsignados(String fecha, Long idConfiguracionTurnos);
 
     @Query(
-            value = "SELECT * FROM turnos_asignados ta WHERE ta.dni_paciente = ?1 and fechay_hora > ?2 order by fechay_hora",
+            value = "SELECT * FROM turnos_asignados ta WHERE ta.dni_paciente = ?1 and fechay_hora >= ?2 order by fechay_hora",
             nativeQuery = true)
     List<TurnoAsignadoEntity> buscarMisTurnos(String dni_Paciente, String fechayHora);
 
@@ -38,6 +38,11 @@ public interface TurnosAsignadosRepository extends JpaRepository<TurnoAsignadoEn
             value = "SELECT * FROM turnos_asignados ta WHERE ta.id_turno_asignado = ?1",
             nativeQuery = true)
     TurnoAsignadoEntity buscarTurnoXId(Long idTurnoAsignado);
+
+    @Query(
+            value = "SELECT * FROM turnos_asignados ta WHERE fechay_hora > ?1 order by fechay_hora",
+            nativeQuery = true)
+    List<TurnoAsignadoEntity> buscarAgendaGeneral(String fechayHora);
 
 
 }

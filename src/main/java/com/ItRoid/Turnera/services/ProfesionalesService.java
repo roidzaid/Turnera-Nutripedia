@@ -30,5 +30,9 @@ public interface ProfesionalesService<T>{
 
     void modificarUsuario(String usuario, Long idProfesional) throws Exception;
 
+    void profesionalON(Long idProfesional) throws Exception;
+
+    void profesionalOFF(Long idProfesional) throws Exception;
+
 
 }

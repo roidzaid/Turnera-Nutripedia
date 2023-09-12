@@ -27,9 +27,9 @@ public interface ProfesionalesRepository extends JpaRepository<ProfesionalEntity
     List<ProfesionalEntity> findByNomYApe(String nombre, String apellido);
 
     @Query(
-            value = "SELECT * FROM profesionales pro WHERE pro.especialidad = ?1",
+            value = "SELECT * FROM profesionales pro WHERE pro.especialidad = ?1 and activo = ?2",
             nativeQuery = true)
-    List<ProfesionalEntity> findByEspecialidad(String especialidad);
+    List<ProfesionalEntity> findByEspecialidad(String especialidad, String activo);
 
     @Query(
             value = "SELECT * FROM profesionales pro WHERE pro.usuario = ?1",

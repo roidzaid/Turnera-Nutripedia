@@ -17,12 +17,14 @@ public class ProfesionalModel {
     private String telefono;
     private String instagram;
     private String usuario;
+    private String AliasMP;
+    private String activo;
 
 
     public ProfesionalModel() {
     }
 
-    public ProfesionalModel(Long idProfesional, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, String instagram, String usuario) {
+    public ProfesionalModel(Long idProfesional, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, String instagram, String usuario, String AliasMP, String activo) {
         this.idProfesional = idProfesional;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -32,7 +34,9 @@ public class ProfesionalModel {
         this.mail = mail;
         this.telefono = telefono;
         this.instagram = instagram;
-        this.usuario = usuario;;
+        this.usuario = usuario;
+        this.AliasMP = AliasMP;
+        this.activo = activo;
     }
 
     public Long getIdProfesional() {
@@ -113,5 +117,21 @@ public class ProfesionalModel {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
+    }
+
+    public String getAliasMP() {
+        return AliasMP;
+    }
+
+    public void setAliasMP(String aliasMP) {
+        AliasMP = aliasMP;
+    }
+
+    public String getActivo() {
+        return activo;
+    }
+
+    public void setActivo(String activo) {
+        this.activo = activo;
     }
 }

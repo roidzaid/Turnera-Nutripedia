@@ -1,6 +1,7 @@
 package com.ItRoid.Turnera.controllers;
 
 
+import com.ItRoid.Turnera.entities.LicenciasEntity;
 import com.ItRoid.Turnera.models.LicenciasModel;
 import com.ItRoid.Turnera.services.LicenciasService;
 import org.slf4j.Logger;
@@ -45,9 +46,9 @@ public class LicenciasController {
 
         try {
 
-            List<String> licencias = this.licenciasService.buscarLicencias(idProfesional);
+            List<LicenciasEntity> licencias = this.licenciasService.buscarLicencias(idProfesional);
 
-            return new ResponseEntity<List<String>>(licencias, HttpStatus.OK);
+            return new ResponseEntity<List<LicenciasEntity>>(licencias, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

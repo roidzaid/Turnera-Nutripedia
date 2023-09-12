@@ -36,8 +36,8 @@ public interface HorariosRepository extends JpaRepository<HorariosEntity, Long> 
     List<String> diasAtencion(Long idProfesional);
 
     @Query(
-            value = "SELECT * FROM horarios h WHERE h.id_Profesional = ?1 and h.fecha_horario_eventual = ?2",
+            value = "SELECT * FROM horarios h WHERE h.id_Profesional = ?1 and h.fecha_horario_eventual = ?2 and h.tipo_turno = ?3",
             nativeQuery = true)
-    HorariosEntity esHoararioEventual(Long idProfesional, String fechaHorarioEventual);
+    HorariosEntity esHoararioEventual(Long idProfesional, String fechaHorarioEventual, String tipoTurno);
 
 }

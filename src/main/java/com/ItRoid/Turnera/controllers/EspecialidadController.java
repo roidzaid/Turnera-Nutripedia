@@ -1,6 +1,8 @@
 package com.ItRoid.Turnera.controllers;
 
 import com.ItRoid.Turnera.models.EspecialidadModel;
+import com.ItRoid.Turnera.models.ProfesionalModel;
+import com.ItRoid.Turnera.models.ValorConsultaModel;
 import com.ItRoid.Turnera.services.EspecialidadService;
 
 import org.slf4j.Logger;
@@ -37,4 +39,65 @@ public class EspecialidadController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/{idEspecialidad}")
+    public ResponseEntity<?> buscarEspecialidades(@PathVariable("idEspecialidad") Long idEspecialidad) throws Exception{
+
+        logger.info("Se busca espacialidad " + idEspecialidad);
+
+        try {
+
+            EspecialidadModel especialidadModel = this.especialidadService.buscarEspecialidad(idEspecialidad);
+
+            return new ResponseEntity<EspecialidadModel>(especialidadModel , HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping()
+    public ResponseEntity<?> createEspecialidad(@RequestBody EspecialidadModel especialidadModel) throws Exception  {
+
+        logger.info("Se da de alta nueva especialidad: " + especialidadModel.getEspecialidad());
+
+        try {
+
+            this.especialidadService.crearEspecialidad(especialidadModel);
+
+            return new ResponseEntity<EspecialidadModel>(especialidadModel, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @DeleteMapping("/{idEspecialidad}")
+    public ResponseEntity<?> borrarEspecialidad(@PathVariable("idEspecialidad") Long idEspecialidad) throws Exception  {
+
+        logger.info("Se elimina la especialidad " + idEspecialidad);
+
+        try {
+            this.especialidadService.eliminarEspecialidad(idEspecialidad);
+
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{idEspecialidad}")
+    public ResponseEntity<?> modificarEspecialidad(@RequestBody EspecialidadModel especialidadModel, @PathVariable("idEspecialidad") Long idEspecialidad) throws Exception  {
+
+        logger.info("Se modifica la especialidad " + especialidadModel.getEspecialidad());
+
+        try {
+
+            this.especialidadService.modificarEspecialidad(idEspecialidad, especialidadModel);
+
+            return new ResponseEntity<EspecialidadModel>(especialidadModel, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

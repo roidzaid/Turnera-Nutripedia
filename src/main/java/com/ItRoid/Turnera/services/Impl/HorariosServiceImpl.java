@@ -260,9 +260,12 @@ public class HorariosServiceImpl implements HorariosService {
                         }
                     }else{
 
-                        if(esEventual(idProfesional, fechaDisponible) && !controlTurnoEventual){
+                        if(esEventual(idProfesional, fechaDisponible, horariosEntity.get(i).getTipoTurno()) && !controlTurnoEventual){
+
+                            HorariosEntity hEventual = this.horariosRepository.esHoararioEventual(idProfesional, fechaDisponible, horariosEntity.get(i).getTipoTurno());
+
                             DiasDisponiblesModel diasDisponibles = new DiasDisponiblesModel(
-                                    horariosEntity.get(i).getIdHorario(),
+                                    hEventual.getIdHorario(),
                                     diaDeSemana,
                                     fechaDisponible
                             );
@@ -281,10 +284,10 @@ public class HorariosServiceImpl implements HorariosService {
     }
 
     @Override
-    public boolean esEventual(Long idProfesional, String fecha){
+    public boolean esEventual(Long idProfesional, String fecha, String tipoTurno){
         boolean esEventual = false;
 
-        HorariosEntity h = this.horariosRepository.esHoararioEventual(idProfesional, fecha);
+        HorariosEntity h = this.horariosRepository.esHoararioEventual(idProfesional, fecha, tipoTurno);
 
         if (h!=null){
             esEventual = true;

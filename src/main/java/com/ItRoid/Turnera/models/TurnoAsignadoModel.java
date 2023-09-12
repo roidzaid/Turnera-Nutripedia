@@ -9,7 +9,7 @@ public class TurnoAsignadoModel {
     private String fecha;
     private String hora;
     private Long idProfesional;
-    private String nombreProfesional;
+        private String nombreProfesional;
     private String apellidoProfesional;
     private String especialidad;
     private String mailProfesional;
@@ -21,12 +21,14 @@ public class TurnoAsignadoModel {
     private String mailPaciente;
     private String tipoConsulta;
     private String motivoConsulta;
+    private String estadoPago;
+    private String idPagoMP;
 
 
     public TurnoAsignadoModel() {
     }
 
-    public TurnoAsignadoModel(Long idTurnoAsignado, Long idConfiguracionTurno, String fecha, String hora, Long idProfesional, String nombreProfesional, String apellidoProfesional, String especialidad, String mailProfesional, Long idPaciente, String nombrePaciente, String apellidoPaciente, String dniPaciente, String telefonoPaciente, String mailPaciente, String tipoConsulta, String motivoConsulta) {
+    public TurnoAsignadoModel(Long idTurnoAsignado, Long idConfiguracionTurno, String fecha, String hora, Long idProfesional, String nombreProfesional, String apellidoProfesional, String especialidad, String mailProfesional, Long idPaciente, String nombrePaciente, String apellidoPaciente, String dniPaciente, String telefonoPaciente, String mailPaciente, String tipoConsulta, String motivoConsulta, String estadoPago, String idPagoMP) {
         this.idTurnoAsignado = idTurnoAsignado;
         this.idConfiguracionTurno = idConfiguracionTurno;
         this.fecha = fecha;
@@ -44,6 +46,8 @@ public class TurnoAsignadoModel {
         this.mailPaciente = mailPaciente;
         this.tipoConsulta = tipoConsulta;
         this.motivoConsulta = motivoConsulta;
+        this.estadoPago = estadoPago;
+        this.idPagoMP = idPagoMP;
     }
 
     public Long getIdTurnoAsignado() {
@@ -180,5 +184,21 @@ public class TurnoAsignadoModel {
 
     public void setMotivoConsulta(String motivoConsulta) {
         this.motivoConsulta = motivoConsulta;
+    }
+
+    public String getEstadoPago() {
+        return estadoPago;
+    }
+
+    public void setEstadoPago(String estadoPago) {
+        this.estadoPago = estadoPago;
+    }
+
+    public String getIdPagoMP() {
+        return idPagoMP;
+    }
+
+    public void setIdPagoMP(String idPagoMP) {
+        this.idPagoMP = idPagoMP;
     }
 }

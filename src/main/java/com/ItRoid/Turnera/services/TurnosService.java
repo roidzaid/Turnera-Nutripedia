@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface TurnosService<T>{
 
-    void asignarTurno(AsignarTurnoModel asignarTurnoModel) throws ParseException;
+    TurnoAsignadoModel asignarTurno(AsignarTurnoModel asignarTurnoModel) throws ParseException;
 
     List<TurnoAsignadoModel> turnosDisponibles(String fecha, Long idConfiguracionturno) throws Exception;
 
@@ -19,11 +19,15 @@ public interface TurnosService<T>{
 
     List<TurnoAsignadoModel> agenda(Long idProfesional, String fecha) throws Exception;
 
+    List<TurnoAsignadoModel> agendaGeneral() throws Exception;
+
     void cancelarTurno(Long idTurnoAsignado) throws Exception;
 
     TurnoAsignadoModel buscarTurno(Long idTurnoAsignado) throws Exception;
 
+    void marcarCobroSeña(Long idTurnoAsignado) throws Exception;
 
+    void marcarEstadoSeña(Long idTurnoAsignado, String idPagaMP, String estadoPago) throws Exception;
 
 
 }

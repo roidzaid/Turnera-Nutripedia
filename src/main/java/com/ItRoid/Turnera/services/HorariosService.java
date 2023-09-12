@@ -25,5 +25,5 @@ public interface HorariosService <T>{
 
     ConfiguracionTurnoModel buscarConfiguracionDeTurno(Long idConfiguracionTurno) throws Exception;
 
-    boolean esEventual(Long idProfesional, String fecha);
+    boolean esEventual(Long idProfesional, String fecha, String tipoTurno);
 }

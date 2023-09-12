@@ -153,6 +153,34 @@ public class ProfesionalesController {
         }
     }
 
+    @PutMapping("ON/{idProfesional}")
+    public ResponseEntity<?> profesionalON(@PathVariable("idProfesional") Long idProfesional) throws Exception  {
+
+        logger.info("Se activa profesional: " + idProfesional);
+
+        try {
+            this.profesionalesService.profesionalON(idProfesional);
+
+            return new ResponseEntity<Long>(idProfesional, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("OFF/{idProfesional}")
+    public ResponseEntity<?> profesionalOFF(@PathVariable("idProfesional") Long idProfesional) throws Exception  {
+
+        logger.info("Se activa profesional: " + idProfesional);
+
+        try {
+            this.profesionalesService.profesionalOFF(idProfesional);
+
+            return new ResponseEntity<Long>(idProfesional, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("usuario/{idProfesional}/{usuario}")
     public ResponseEntity<?> modificarUsuario(@PathVariable("idProfesional") Long idProfesional, @PathVariable("usuario") String usuario) throws Exception  {
 

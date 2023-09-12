@@ -1,9 +1,13 @@
 insert into especialidades (id_especialidad, especialidad) values ('001', 'PEDIATRIA');
 insert into especialidades (id_especialidad, especialidad) values ('002', 'NUTRICION');
 insert into especialidades (id_especialidad, especialidad) values ('003', 'OFTALMOLOGIA INFANTIL');
-insert into especialidades (id_especialidad, especialidad) values ('004', 'NEUMONOLOGIA INFANTIL');
 insert into especialidades (id_especialidad, especialidad) values ('005', 'GASTROENTEROLOGIA INFANTIL');
-insert into especialidades (id_especialidad, especialidad) values ('006', 'DERMATOLOGIA INFANTIL');
+insert into especialidades (id_especialidad, especialidad) values ('007', 'MEDICINA GENERAL Y FAMILIAR');
+insert into especialidades (id_especialidad, especialidad) values ('008', 'PSICOPEDAGOGIA');
+insert into especialidades (id_especialidad, especialidad) values ('009', 'ODONTOLOGIA INFANTIL');
+insert into especialidades (id_especialidad, especialidad) values ('010', 'APTO ESCOLAR');
+insert into especialidades (id_especialidad, especialidad) values ('011', 'ELECTROCARDIOGRAMA');
+insert into especialidades (id_especialidad, especialidad) values ('012', 'NEUROLOGIA INFANTIL');
 
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('001', 'CONTROL DE ENFERMEDAD');
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('002', 'CONTROL DE SALUD');
@@ -12,6 +16,17 @@ insert into tipo_turno (id_tipo_turno, tipo_turno) values ('004', 'SEGUIMIENTO N
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('005', 'CONSULTA');
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('006', 'CONSULTA VIRTUAL');
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('007', 'CONTROL OFTALMOLOGICO');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('008', 'RECETAS/ORDENES');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('009', 'CONSULTORIO INTEGRAL ADULTXS');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('010', 'CONSULTORIO INTEGRAL ADOLESCENTES');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('011', 'CONSEJERIA EN SALUD SEXUAL(Y NO) REPRODUCTIVA');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('012', 'TELEMEDICINA - CONSULTORIO INTEGRAL ADULTXS / CONSEJERIA EN SALUD SEXUAL(Y NO) REPRODUCTIVA');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('013', 'TELEMEDICINA - CONSULTORIO INTEGRAL ADOLESCENTES');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('014', 'APTO BUCODENTAL');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('015', 'PEDIATRIA y ODONTOLOGIA');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('016', 'PEDIATRIA y OFTALMOLOGIA');
+insert into tipo_turno (id_tipo_turno, tipo_turno) values ('017', 'ELECTROCARDIOGRAMA');
+
 
 
 insert into feriados (id_feriado, fecha, detalle) values ('001', '01-01-2022', 'Año Nuevo');
@@ -35,4 +50,25 @@ insert into feriados (id_feriado, fecha, detalle) values ('018', '21-11-2022', '
 insert into feriados (id_feriado, fecha, detalle) values ('019', '08-12-2022', 'Inmaculada Concepción de María');
 insert into feriados (id_feriado, fecha, detalle) values ('020', '09-12-2022', 'Feriado con fines turísticos');
 insert into feriados (id_feriado, fecha, detalle) values ('021', '25-12-2022', 'Navidad');
+insert into feriados (id_feriado, fecha, detalle) values ('022', '01-01-2023', 'Año Nuevo');
+insert into feriados (id_feriado, fecha, detalle) values ('023', '20-02-2023', 'Carnaval');
+insert into feriados (id_feriado, fecha, detalle) values ('024', '21-03-2023', 'Carnaval');
+insert into feriados (id_feriado, fecha, detalle) values ('025', '24-03-2023', 'Día Nacional de la Memoria por la Verdad y la Justicia');
+insert into feriados (id_feriado, fecha, detalle) values ('026', '02-04-2023', 'Día del Veterano y de los Caídos en la Guerra de Malvinas');
+insert into feriados (id_feriado, fecha, detalle) values ('027', '06-04-2023', 'Jueves Santo');
+insert into feriados (id_feriado, fecha, detalle) values ('028', '07-04-2023', 'Viernes Santo');
+insert into feriados (id_feriado, fecha, detalle) values ('029', '24-04-2023', 'Día de acción por la tolerancia y el respeto entre los pueblos');
+insert into feriados (id_feriado, fecha, detalle) values ('030', '01-05-2023', 'Día del Trabajador');
+insert into feriados (id_feriado, fecha, detalle) values ('031', '25-05-2023', 'Día de la Revolución de Mayo');
+insert into feriados (id_feriado, fecha, detalle) values ('032', '26-05-2023', 'Feriado con fines turísticos');
+insert into feriados (id_feriado, fecha, detalle) values ('033', '17-06-2023', 'Paso a la Inmortalidad del Gral. Don Martín Miguel de Güemes');
+insert into feriados (id_feriado, fecha, detalle) values ('034', '19-06-2023', 'Feriado con fines turísticos');
+insert into feriados (id_feriado, fecha, detalle) values ('035', '20-06-2023', 'Paso a la Inmortalidad del Gral. Manuel Belgrano');
+insert into feriados (id_feriado, fecha, detalle) values ('036', '09-07-2023', 'Día de la Independencia');
+insert into feriados (id_feriado, fecha, detalle) values ('037', '21-08-2023', 'Paso a la Inmortalidad del Gral. José de San Martín (17/8)');
+insert into feriados (id_feriado, fecha, detalle) values ('038', '13-10-2023', 'Feriado con fines turísticos');
+insert into feriados (id_feriado, fecha, detalle) values ('039', '16-10-2023', 'Día del Respeto a la Diversidad Cultural (12/10)');
+insert into feriados (id_feriado, fecha, detalle) values ('040', '20-11-2023', 'Día de la Soberanía Nacional');
+insert into feriados (id_feriado, fecha, detalle) values ('041', '08-12-2023', 'Inmaculada Concepción de María');
+insert into feriados (id_feriado, fecha, detalle) values ('042', '25-12-2023', 'Navidad');
 

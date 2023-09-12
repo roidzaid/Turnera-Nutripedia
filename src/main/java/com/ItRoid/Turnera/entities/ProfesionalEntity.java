@@ -49,6 +49,12 @@ public class ProfesionalEntity {
     @Column(name = "usuario")
     private String usuario;
 
+    @Column(name = "aliasMP")
+    private String aliasMP;
+
+    @Column(name = "activo")
+    private String activo;
+
 
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="idProfesional")
@@ -57,7 +63,7 @@ public class ProfesionalEntity {
     public ProfesionalEntity() {
     }
 
-    public ProfesionalEntity(Date fechaAlta, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, String instagram, String usuario) {
+    public ProfesionalEntity(Date fechaAlta, String nombre, String apellido, String dni, String matricula, String especialidad, String mail, String telefono, String instagram, String usuario, String aliasMP, String activo) {
         this.fechaAlta = fechaAlta;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -68,7 +74,8 @@ public class ProfesionalEntity {
         this.telefono = telefono;
         this.instagram = instagram;
         this.usuario = usuario;
-
+        this.aliasMP = aliasMP;
+        this.activo = activo;
     }
 
     public Long getIdProfesional() {
@@ -165,6 +172,22 @@ public class ProfesionalEntity {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
+    }
+
+    public String getAliasMP() {
+        return aliasMP;
+    }
+
+    public void setAliasMP(String aliasMP) {
+        this.aliasMP = aliasMP;
+    }
+
+    public String getActivo() {
+        return activo;
+    }
+
+    public void setActivo(String activo) {
+        this.activo = activo;
     }
 }
 

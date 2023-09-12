@@ -24,7 +24,8 @@ public class ValorConsultaServiceImpl implements ValorConsultaService {
         ValorConsultaEntity valorConsultaEntity = new ValorConsultaEntity(
                 valorConsultaModel.getIdProfesional(),
                 valorConsultaModel.getTipoConsulta(),
-                valorConsultaModel.getValorConsulta()
+                valorConsultaModel.getValorConsulta(),
+                valorConsultaModel.getValorDeSeña()
         );
 
         this.valorConsultaRepository.save(valorConsultaEntity);
@@ -44,7 +45,8 @@ public class ValorConsultaServiceImpl implements ValorConsultaService {
                         e.getIdValorConsulta(),
                         e.getIdProfesional(),
                         e.getTipoConsulta(),
-                        e.getValorConsulta()))
+                        e.getValorConsulta(),
+                        e.getValorDeSeña()))
                 .collect(Collectors.toList());
 
         return list;
@@ -60,11 +62,34 @@ public class ValorConsultaServiceImpl implements ValorConsultaService {
                 valorConsultaEntity.getIdValorConsulta(),
                 valorConsultaEntity.getIdProfesional(),
                 valorConsultaEntity.getTipoConsulta(),
-                valorConsultaEntity.getValorConsulta()
+                valorConsultaEntity.getValorConsulta(),
+                valorConsultaEntity.getValorDeSeña()
         );
 
         return valorConsultaModel;
 
+    }
+
+    @Override
+    public ValorConsultaModel buscarValorconsulta(Long idProfesional, String tipo_consulta) {
+
+        ValorConsultaEntity valorConsultaEntity = this.valorConsultaRepository.findByIdValorConsulta(idProfesional, tipo_consulta);
+
+        if (valorConsultaEntity == null){
+
+            valorConsultaEntity = this.valorConsultaRepository.findPrimerValor(idProfesional);
+
+        }
+
+        ValorConsultaModel valorConsultaModel = new ValorConsultaModel(
+                valorConsultaEntity.getIdValorConsulta(),
+                valorConsultaEntity.getIdProfesional(),
+                valorConsultaEntity.getTipoConsulta(),
+                valorConsultaEntity.getValorConsulta(),
+                valorConsultaEntity.getValorDeSeña()
+        );
+
+        return valorConsultaModel;
     }
 
     @Override
@@ -74,6 +99,7 @@ public class ValorConsultaServiceImpl implements ValorConsultaService {
 
         valorConsultaEntity.setTipoConsulta(valorConsultaModel.getTipoConsulta());
         valorConsultaEntity.setValorConsulta(valorConsultaModel.getValorConsulta());
+        valorConsultaEntity.setValorDeSeña(valorConsultaModel.getValorDeSeña());
 
         this.valorConsultaRepository.save(valorConsultaEntity);
 

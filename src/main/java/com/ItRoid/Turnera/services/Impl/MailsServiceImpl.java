@@ -1,6 +1,12 @@
 package com.ItRoid.Turnera.services.Impl;
 
 import com.ItRoid.Turnera.controllers.FotoController;
+import com.ItRoid.Turnera.entities.*;
+import com.ItRoid.Turnera.models.AsignarTurnoModel;
+import com.ItRoid.Turnera.models.MailTurnoModel;
+import com.ItRoid.Turnera.models.TurnoAsignadoModel;
+import com.ItRoid.Turnera.plantillasMail.PlantillasMails;
+import com.ItRoid.Turnera.repositories.*;
 import com.ItRoid.Turnera.services.MailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +23,8 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class MailsServiceImpl implements MailsService {
@@ -39,8 +43,123 @@ public class MailsServiceImpl implements MailsService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @Autowired
+    private TurnosAsignadosRepository turnosAsignadosRepository;
+
+    @Autowired
+    private ConfiguracionTurnosRepository configuracionTurnosRepository;
+
+    @Autowired
+    private HorariosRepository horariosRepository;
+
+    @Autowired
+    private ProfesionalesRepository profesionalesRepository;
+
+    @Autowired
+    private ValorConsultaRepository valorConsultaRepository;
+
+    @Autowired
+    private PacientesRepository pacientesRepository;
+
     @Override
-    public void enviarMail(String destinatario, String plantilla) {
+    public void prepararMails(AsignarTurnoModel asignarTurnoModel) {
+
+        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByidProfesional(asignarTurnoModel.getIdProfesional());
+
+        PacienteEntity pacienteEntity = this.pacientesRepository.findByIdPaciente(asignarTurnoModel.getIdPaciente());
+
+        ConfiguracionTurnosEntity configuracionTurnosEntity = this.configuracionTurnosRepository.findByIdConfiguracionTurno(asignarTurnoModel.getIdConfiguracionTurno());
+
+        ValorConsultaEntity valorConsultaEntity = this.valorConsultaRepository.findByIdValorConsulta(asignarTurnoModel.getIdProfesional(), asignarTurnoModel.getTipoConsulta());
+
+        if (valorConsultaEntity == null){
+            List<ValorConsultaEntity> listaValorConsultaEntity = this.valorConsultaRepository.findByIdProfesional(asignarTurnoModel.getIdProfesional());
+
+            valorConsultaEntity = listaValorConsultaEntity.get(0);
+        }
+
+        MailTurnoModel mailTurnoModel = new MailTurnoModel(
+                pacienteEntity.getMail(),
+                pacienteEntity.getNombre() + " " + pacienteEntity.getApellido(),
+                pacienteEntity.getDni(),
+                pacienteEntity.getTelefono(),
+                profesionalEntity.getMail(),
+                profesionalEntity.getNombre() + " " + profesionalEntity.getApellido(),
+                profesionalEntity.getTelefono(),
+                asignarTurnoModel.getEspecialidad(),
+                profesionalEntity.getAliasMP(),
+                asignarTurnoModel.getFecha(),
+                configuracionTurnosEntity.getHora(),
+                asignarTurnoModel.getTipoConsulta(),
+                asignarTurnoModel.getMotivoConsulta(),
+                valorConsultaEntity.getValorConsulta(),
+                valorConsultaEntity.getValorDeSeña());
+
+        PlantillasMails platilla = new PlantillasMails();
+
+        String asunto = "Turno Agendado";
+
+        //Enviar mail a paciente
+        if (asignarTurnoModel.getTipoConsulta().equals("CONSULTA VIRTUAL")){
+            enviarMail(pacienteEntity.getMail(), platilla.crearPlantillaParaPacienteTurnoVirtual(mailTurnoModel), asunto);
+        }else{
+            enviarMail(pacienteEntity.getMail(), platilla.crearPlantillaParaPaciente(mailTurnoModel), asunto);
+        }
+
+        //Enviar mail a profesional
+        enviarMail(profesionalEntity.getMail(), platilla.crearPlantillaParaProfesional(mailTurnoModel), asunto);
+
+    }
+
+    @Override
+    public void prepararMailsCancelacion(Long idTurnoAsignado) {
+
+        TurnoAsignadoEntity turnoAsignado =  this.turnosAsignadosRepository.buscarTurnoXId(idTurnoAsignado);
+
+        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByidProfesional(turnoAsignado.getIdProfesional());
+
+        PacienteEntity pacienteEntity = this.pacientesRepository.findByIdPaciente(turnoAsignado.getIdPaciente());
+        //enviar mail a paciente y profesional
+
+        ValorConsultaEntity valorConsultaEntity = this.valorConsultaRepository.findByIdValorConsulta(turnoAsignado.getIdProfesional(), turnoAsignado.getTipoConsulta());
+
+        if (valorConsultaEntity == null){
+            List<ValorConsultaEntity> listaValorConsultaEntity = this.valorConsultaRepository.findByIdProfesional(turnoAsignado.getIdProfesional());
+
+            valorConsultaEntity = listaValorConsultaEntity.get(0);
+        }
+
+
+        MailTurnoModel mailTurnoModel = new MailTurnoModel(
+                pacienteEntity.getMail(),
+                pacienteEntity.getNombre() + " " + pacienteEntity.getApellido(),
+                pacienteEntity.getDni(),
+                pacienteEntity.getTelefono(),
+                profesionalEntity.getMail(),
+                profesionalEntity.getNombre() + " " + profesionalEntity.getApellido(),
+                profesionalEntity.getTelefono(),
+                turnoAsignado.getEspecialidad(),
+                profesionalEntity.getAliasMP(),
+                turnoAsignado.getFecha(),
+                turnoAsignado.getHora(),
+                turnoAsignado.getTipoConsulta(),
+                turnoAsignado.getMotivoConsulta(),
+                valorConsultaEntity.getValorConsulta(),
+                valorConsultaEntity.getValorDeSeña());
+
+        PlantillasMails platilla = new PlantillasMails();
+
+        String asunto = "Turno Cancelado";
+
+        //Enviar mail a paciente
+        enviarMail(pacienteEntity.getMail(), platilla.crearPlantillaParaPacienteCancelacion(mailTurnoModel), asunto);
+
+        //Enviar mail a profesional
+        enviarMail(profesionalEntity.getMail(), platilla.crearPlantillaParaProfesionalCancelacion(mailTurnoModel), asunto);
+    }
+
+    @Override
+    public void enviarMail(String destinatario, String plantilla, String asunto) {
 
         logger.info("Se envian los mail");
 
@@ -58,7 +177,7 @@ public class MailsServiceImpl implements MailsService {
             try {
                 message.setFrom(new InternetAddress(remitente));
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));   //Se podrían añadir varios de la misma manera
-                message.setSubject("Espacio NUTRIPEDIA - Turno confirmado");
+                message.setSubject("Espacio NUTRIPEDIA - " + asunto);
 
                 String html = "";
 

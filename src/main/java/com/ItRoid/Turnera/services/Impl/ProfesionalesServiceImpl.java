@@ -41,7 +41,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                 profesional.getMail(),
                 profesional.getTelefono(),
                 profesional.getInstagram(),
-                profesional.getUsuario()
+                profesional.getUsuario(),
+                profesional.getAliasMP(),
+                    "SI"
                 );
 
             this.profesionalesRepository.save(profesionalEntity);
@@ -75,7 +77,10 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getMail(),
                     profesionalEntity.getTelefono(),
                     profesionalEntity.getInstagram(),
-                    profesionalEntity.getUsuario());
+                    profesionalEntity.getUsuario(),
+                    profesionalEntity.getAliasMP(),
+                    profesionalEntity.getActivo());
+
 
             return profesionalModel;
 
@@ -102,7 +107,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getMail(),
                     profesionalEntity.getTelefono(),
                     profesionalEntity.getInstagram(),
-                    profesionalEntity.getUsuario());
+                    profesionalEntity.getUsuario(),
+                    profesionalEntity.getAliasMP(),
+                    profesionalEntity.getActivo());
 
             return profesionalModel;
 
@@ -129,7 +136,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getMail(),
                     profesionalEntity.getTelefono(),
                     profesionalEntity.getInstagram(),
-                    profesionalEntity.getUsuario());
+                    profesionalEntity.getUsuario(),
+                    profesionalEntity.getAliasMP(),
+                    profesionalEntity.getActivo());
 
             return profesionalModel;
 
@@ -157,7 +166,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getMail(),
                             e.getTelefono(),
                             e.getInstagram(),
-                            e.getUsuario()))
+                            e.getUsuario(),
+                            e.getAliasMP(),
+                            e.getActivo()))
                     .collect(Collectors.toList());
 
 
@@ -171,7 +182,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
     @Override
     public List<ProfesionalModel> buscarProfesionalXEspecialidad(String especialidad) throws Exception {
 
-        List<ProfesionalEntity> profesionalEntity = this.profesionalesRepository.findByEspecialidad(especialidad);
+        List<ProfesionalEntity> profesionalEntity = this.profesionalesRepository.findByEspecialidad(especialidad, "SI");
 
         if (profesionalEntity != null) {
 
@@ -187,7 +198,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getMail(),
                             e.getTelefono(),
                             e.getInstagram(),
-                            e.getUsuario()))
+                            e.getUsuario(),
+                            e.getAliasMP(),
+                            e.getActivo()))
                     .collect(Collectors.toList());
 
 
@@ -215,7 +228,9 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                         e.getMail(),
                         e.getTelefono(),
                         e.getInstagram(),
-                        e.getUsuario()))
+                        e.getUsuario(),
+                        e.getAliasMP(),
+                        e.getActivo()))
                 .collect(Collectors.toList());
 
 
@@ -238,10 +253,45 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
             profesionalEntity.setTelefono(profesional.getTelefono());
             profesionalEntity.setMail(profesional.getMail());
             profesionalEntity.setInstagram(profesional.getInstagram());
+            profesionalEntity.setAliasMP(profesional.getAliasMP());
 
             this.profesionalesRepository.save(profesionalEntity);
 
             return profesional;
+
+        }else{
+            throw new Exception("No existe ningun profesional con dni: " +  idProfesional);
+        }
+
+    }
+
+    @Override
+    public void profesionalON(Long idProfesional) throws Exception {
+
+        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByidProfesional(idProfesional);
+
+
+        if (profesionalEntity != null) {
+
+            profesionalEntity.setActivo("SI");
+            this.profesionalesRepository.save(profesionalEntity);
+
+        }else{
+            throw new Exception("No existe ningun profesional con dni: " +  idProfesional);
+        }
+
+    }
+
+    @Override
+    public void profesionalOFF(Long idProfesional) throws Exception {
+
+        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByidProfesional(idProfesional);
+
+
+        if (profesionalEntity != null) {
+
+            profesionalEntity.setActivo("NO");
+            this.profesionalesRepository.save(profesionalEntity);
 
         }else{
             throw new Exception("No existe ningun profesional con dni: " +  idProfesional);
@@ -381,5 +431,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
         }
 
     }
+
+
 
 }

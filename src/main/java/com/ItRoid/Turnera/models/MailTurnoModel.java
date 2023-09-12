@@ -10,15 +10,18 @@ public class MailTurnoModel {
     private String nombreProfecional;
     private String telefonoProfesional;
     private String especialidad;
+    private String aliasMP;
     private String fecha;
     private String hora;
     private String tipoConsulta;
     private String motivoConsulta;
+    private String valorConsulta;
+    private String valorDeSeña;
 
     public MailTurnoModel() {
     }
 
-    public MailTurnoModel(String mailPaciente, String nombrePaciente, String dniPaciente, String telefonoPaciente, String mailProfecional, String nombreProfecional, String telefonoProfesional, String especialidad, String fecha, String hora, String tipoConsulta, String motivoConsulta) {
+    public MailTurnoModel(String mailPaciente, String nombrePaciente, String dniPaciente, String telefonoPaciente, String mailProfecional, String nombreProfecional, String telefonoProfesional, String especialidad, String aliasMP, String fecha, String hora, String tipoConsulta, String motivoConsulta, String valorConsulta, String valorDeSeña) {
         this.mailPaciente = mailPaciente;
         this.nombrePaciente = nombrePaciente;
         this.dniPaciente = dniPaciente;
@@ -27,10 +30,14 @@ public class MailTurnoModel {
         this.nombreProfecional = nombreProfecional;
         this.telefonoProfesional = telefonoProfesional;
         this.especialidad = especialidad;
+        this.aliasMP = aliasMP;
         this.fecha = fecha;
         this.hora = hora;
         this.tipoConsulta = tipoConsulta;
         this.motivoConsulta = motivoConsulta;
+        this.valorConsulta = valorConsulta;
+        this.valorDeSeña = valorDeSeña;
+
     }
 
     public String getMailPaciente() {
@@ -127,5 +134,29 @@ public class MailTurnoModel {
 
     public void setMotivoConsulta(String motivoConsulta) {
         this.motivoConsulta = motivoConsulta;
+    }
+
+    public String getAliasMP() {
+        return aliasMP;
+    }
+
+    public void setAliasMP(String aliasMP) {
+        this.aliasMP = aliasMP;
+    }
+
+    public String getValorConsulta() {
+        return valorConsulta;
+    }
+
+    public void setValorConsulta(String valorConsulta) {
+        this.valorConsulta = valorConsulta;
+    }
+
+    public String getValorDeSeña() {
+        return valorDeSeña;
+    }
+
+    public void setValorDeSeña(String valorDeSeña) {
+        this.valorDeSeña = valorDeSeña;
     }
 }

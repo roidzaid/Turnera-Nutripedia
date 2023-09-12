@@ -21,13 +21,17 @@ public class ValorConsultaEntity {
     @Column(name="valorConsulta")
     private String valorConsulta;
 
+    @Column(name="valorDeSeña")
+    private String valorDeSeña;
+
     public ValorConsultaEntity() {
     }
 
-    public ValorConsultaEntity(Long idProfesional, String tipoConsulta, String valorConsulta) {
+    public ValorConsultaEntity(Long idProfesional, String tipoConsulta, String valorConsulta, String valorDeSeña) {
         this.idProfesional = idProfesional;
         this.tipoConsulta = tipoConsulta;
         this.valorConsulta = valorConsulta;
+        this.valorDeSeña = valorDeSeña;
     }
 
     public Long getIdValorConsulta() {
@@ -60,5 +64,13 @@ public class ValorConsultaEntity {
 
     public void setValorConsulta(String valorConsulta) {
         this.valorConsulta = valorConsulta;
+    }
+
+    public String getValorDeSeña() {
+        return valorDeSeña;
+    }
+
+    public void setValorDeSeña(String valorDeSeña) {
+        this.valorDeSeña = valorDeSeña;
     }
 }

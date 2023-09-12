@@ -6,15 +6,17 @@ public class ValorConsultaModel {
     private Long idProfesional;
     private String tipoConsulta;
     private String valorConsulta;
+    private String valorDeSeña;
 
     public ValorConsultaModel() {
     }
 
-    public ValorConsultaModel(Long idValorConsulta, Long idProfesional, String tipoConsulta, String valorConsulta) {
+    public ValorConsultaModel(Long idValorConsulta, Long idProfesional, String tipoConsulta, String valorConsulta, String valorDeSeña) {
         this.idValorConsulta = idValorConsulta;
         this.idProfesional = idProfesional;
         this.tipoConsulta = tipoConsulta;
         this.valorConsulta = valorConsulta;
+        this.valorDeSeña = valorDeSeña;
     }
 
     public Long getIdValorConsulta() {
@@ -47,5 +49,13 @@ public class ValorConsultaModel {
 
     public void setValorConsulta(String valorConsulta) {
         this.valorConsulta = valorConsulta;
+    }
+
+    public String getValorDeSeña() {
+        return valorDeSeña;
+    }
+
+    public void setValorDeSeña(String valorDeSeña) {
+        this.valorDeSeña = valorDeSeña;
     }
 }

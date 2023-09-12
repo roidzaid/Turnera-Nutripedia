@@ -65,12 +65,17 @@ public class TurnoAsignadoEntity {
     @Column(name = "motivoConsulta")
     private String motivoConsulta;
 
+    @Column(name = "estadoPago")
+    private String estadoPago;
+
+    @Column(name = "idPagoMP")
+    private String idPagoMP;
 
 
     public TurnoAsignadoEntity() {
     }
 
-    public TurnoAsignadoEntity(Long idConfiguracionTurno, String fecha, String hora, String fechayHora, Long idProfesional, String nombreProfesional, String apellidoProfesional, String especialidad, String mailProfesional, Long idPaciente, String nombrePaciente, String apellidoPaciente, String dniPaciente, String telefonoPaciente, String mailPaciente,String tipoConsulta, String motivoConsulta) {
+    public TurnoAsignadoEntity(Long idConfiguracionTurno, String fecha, String hora, String fechayHora, Long idProfesional, String nombreProfesional, String apellidoProfesional, String especialidad, String mailProfesional, Long idPaciente, String nombrePaciente, String apellidoPaciente, String dniPaciente, String telefonoPaciente, String mailPaciente, String tipoConsulta, String motivoConsulta, String estadoPago, String idPagoMP) {
         this.idConfiguracionTurno = idConfiguracionTurno;
         this.fecha = fecha;
         this.hora = hora;
@@ -88,6 +93,8 @@ public class TurnoAsignadoEntity {
         this.mailPaciente = mailPaciente;
         this.tipoConsulta = tipoConsulta;
         this.motivoConsulta = motivoConsulta;
+        this.estadoPago = estadoPago;
+        this.idPagoMP = idPagoMP;
     }
 
     public Long getIdTurnoAsignado() {
@@ -232,5 +239,21 @@ public class TurnoAsignadoEntity {
 
     public void setMotivoConsulta(String motivoConsulta) {
         this.motivoConsulta = motivoConsulta;
+    }
+
+    public String getEstadoPago() {
+        return estadoPago;
+    }
+
+    public void setEstadoPago(String estadoPago) {
+        this.estadoPago = estadoPago;
+    }
+
+    public String getIdPagoMP() {
+        return idPagoMP;
+    }
+
+    public void setIdPagoMP(String idPagoMP) {
+        this.idPagoMP = idPagoMP;
     }
 }

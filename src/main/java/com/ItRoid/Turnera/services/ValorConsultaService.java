@@ -12,6 +12,8 @@ public interface ValorConsultaService <T>{
 
     ValorConsultaModel buscarValorconsulta (Long idValorConsulta);
 
+    ValorConsultaModel buscarValorconsulta (Long idProfesional, String tipo_consulta);
+
     ValorConsultaModel modifValorConsuta (Long idValorConsulta, ValorConsultaModel valorConsultaModel);
 
     void deleteValorConsulta (Long idValorConsulta);

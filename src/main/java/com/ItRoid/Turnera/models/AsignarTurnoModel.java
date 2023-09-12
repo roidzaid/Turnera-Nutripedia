@@ -9,11 +9,13 @@ public class AsignarTurnoModel {
     private Long idPaciente;
     private String tipoConsulta;
     private String motivoConsulta;
+    private String estadoPago;
+    private String idPagoMP;
 
     public AsignarTurnoModel() {
     }
 
-    public AsignarTurnoModel(Long idConfiguracionTurno, String fecha, Long idProfesional, String especialidad, Long idPaciente,String tipoConsulta, String motivoConsulta) {
+    public AsignarTurnoModel(Long idConfiguracionTurno, String fecha, Long idProfesional, String especialidad, Long idPaciente, String tipoConsulta, String motivoConsulta, String estadoPago, String idPagoMP) {
         this.idConfiguracionTurno = idConfiguracionTurno;
         this.fecha = fecha;
         this.idProfesional = idProfesional;
@@ -21,6 +23,8 @@ public class AsignarTurnoModel {
         this.idPaciente = idPaciente;
         this.tipoConsulta = tipoConsulta;
         this.motivoConsulta = motivoConsulta;
+        this.estadoPago = estadoPago;
+        this.idPagoMP = idPagoMP;
     }
 
     public Long getIdConfiguracionTurno() {
@@ -77,5 +81,21 @@ public class AsignarTurnoModel {
 
     public void setMotivoConsulta(String motivoConsulta) {
         this.motivoConsulta = motivoConsulta;
+    }
+
+    public String getEstadoPago() {
+        return estadoPago;
+    }
+
+    public void setEstadoPago(String estadoPago) {
+        this.estadoPago = estadoPago;
+    }
+
+    public String getIdPagoMP() {
+        return idPagoMP;
+    }
+
+    public void setIdPagoMP(String idPagoMP) {
+        this.idPagoMP = idPagoMP;
     }
 }

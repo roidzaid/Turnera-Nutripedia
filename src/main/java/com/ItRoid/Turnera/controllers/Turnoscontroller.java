@@ -1,6 +1,7 @@
 package com.ItRoid.Turnera.controllers;
 
 import com.ItRoid.Turnera.models.AsignarTurnoModel;
+import com.ItRoid.Turnera.models.ProfesionalModel;
 import com.ItRoid.Turnera.models.TurnoAsignadoModel;
 import com.ItRoid.Turnera.models.TurnosDisponiblesModel;
 import com.ItRoid.Turnera.services.TurnosService;
@@ -29,9 +30,9 @@ public class Turnoscontroller {
         logger.info("Nuevo Turno para el paciente: " + asignarTurnoModel.getIdPaciente());
 
         try {
-            this.turnosService.asignarTurno(asignarTurnoModel);
+            TurnoAsignadoModel turnoAsignadoModel = this.turnosService.asignarTurno(asignarTurnoModel);
 
-            return new ResponseEntity<AsignarTurnoModel>(asignarTurnoModel, HttpStatus.CREATED);
+            return new ResponseEntity<TurnoAsignadoModel>(turnoAsignadoModel, HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -83,6 +84,21 @@ public class Turnoscontroller {
         }
     }
 
+    @GetMapping("/agendaGeneral")
+    public ResponseEntity<?> agendaGeneral() throws Exception{
+
+        logger.info("Buscar agenda general");
+
+        try {
+
+            List<TurnoAsignadoModel> agenda = this.turnosService.agendaGeneral();
+
+            return new ResponseEntity<List<TurnoAsignadoModel>>(agenda, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/agenda/{idProfesional}/{fecha}")
     public ResponseEntity<?> agenda(@PathVariable("idProfesional") Long idProfesional, @PathVariable("fecha") String fecha) throws Exception{
 
@@ -123,6 +139,36 @@ public class Turnoscontroller {
             TurnoAsignadoModel turnoAsignadoModel = this.turnosService.buscarTurno(idTurnoAsignado);
 
             return new ResponseEntity<TurnoAsignadoModel>(turnoAsignadoModel, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{idTurnoAsignado}")
+    public ResponseEntity<?> marcarCobroSeña(@PathVariable("idTurnoAsignado") Long idTurnoAsignado) throws Exception  {
+
+        logger.info("verificacion de la seña de turno manual: " + idTurnoAsignado);
+
+        try {
+
+            this.turnosService.marcarCobroSeña(idTurnoAsignado);
+
+            return new ResponseEntity<Long>(idTurnoAsignado, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{idTurnoAsignado}/{idPagoMP}/{estadoPago}")
+    public ResponseEntity<?> marcarCobroSeña(@PathVariable("idTurnoAsignado") Long idTurnoAsignado, @PathVariable("idPagoMP") String idPagoMP, @PathVariable("estadoPago") String estadoPago) throws Exception  {
+
+        logger.info("Se marca como cobrada la seña al turno: " + idTurnoAsignado);
+
+        try {
+
+            this.turnosService.marcarEstadoSeña(idTurnoAsignado, idPagoMP, estadoPago);
+
+            return new ResponseEntity<Long>(idTurnoAsignado, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

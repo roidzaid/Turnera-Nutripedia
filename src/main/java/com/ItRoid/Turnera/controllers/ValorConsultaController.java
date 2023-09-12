@@ -55,6 +55,21 @@ public class ValorConsultaController {
         }
     }
 
+    @GetMapping("/valor/{idprofesional}/{tipo_consuta}")
+    public ResponseEntity<?> buscarValorConsulta(@PathVariable("idprofesional") Long idprofesional, @PathVariable("tipo_consuta") String tipo_consuta) throws Exception {
+
+        logger.info("Se busca valor de la consulta para " + idprofesional);
+
+        try {
+
+            ValorConsultaModel valorConsultaModel = this.valorConsultaService.buscarValorconsulta(idprofesional, tipo_consuta);
+
+            return new ResponseEntity<ValorConsultaModel>(valorConsultaModel, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/all/{idProfesional}")
     public ResponseEntity<?> listaValoresConsultas(@PathVariable("idProfesional") Long idProfesional) throws Exception {
 

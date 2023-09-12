@@ -35,6 +35,9 @@ public class TurnosServiceImpl implements TurnosService {
     private ProfesionalesRepository profesionalesRepository;
 
     @Autowired
+    private ValorConsultaRepository valorConsultaRepository;
+
+    @Autowired
     private PacientesRepository pacientesRepository;
 
     @Autowired
@@ -45,13 +48,23 @@ public class TurnosServiceImpl implements TurnosService {
 
 
     @Override
-    public void asignarTurno(AsignarTurnoModel asignarTurnoModel) throws ParseException {
+    public TurnoAsignadoModel asignarTurno(AsignarTurnoModel asignarTurnoModel) throws ParseException {
 
         ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByidProfesional(asignarTurnoModel.getIdProfesional());
 
         PacienteEntity pacienteEntity = this.pacientesRepository.findByIdPaciente(asignarTurnoModel.getIdPaciente());
 
         ConfiguracionTurnosEntity configuracionTurnosEntity = this.configuracionTurnosRepository.findByIdConfiguracionTurno(asignarTurnoModel.getIdConfiguracionTurno());
+
+        ValorConsultaEntity valorConsultaEntity = this.valorConsultaRepository.findByIdValorConsulta(asignarTurnoModel.getIdProfesional(), asignarTurnoModel.getTipoConsulta());
+
+        if (valorConsultaEntity == null){
+            List<ValorConsultaEntity> listaValorConsultaEntity = this.valorConsultaRepository.findByIdProfesional(asignarTurnoModel.getIdProfesional());
+
+            valorConsultaEntity = listaValorConsultaEntity.get(0);
+        }
+
+
 
        String[] horaSplit = configuracionTurnosEntity.getHora().split(":", 2);
 
@@ -94,11 +107,35 @@ public class TurnosServiceImpl implements TurnosService {
                 pacienteEntity.getTelefono(),
                 pacienteEntity.getMail(),
                 asignarTurnoModel.getTipoConsulta(),
-                asignarTurnoModel.getMotivoConsulta());
+                asignarTurnoModel.getMotivoConsulta(),
+                asignarTurnoModel.getEstadoPago(),
+                asignarTurnoModel.getIdPagoMP());
 
         this.turnosAsignadosRepository.save(turnoAsignadoEntity);
 
-        MailTurnoModel mailTurnoModel = new MailTurnoModel(
+        TurnoAsignadoModel turnoAsignadoModel = new TurnoAsignadoModel(
+                turnoAsignadoEntity.getIdTurnoAsignado(),
+                turnoAsignadoEntity.getIdConfiguracionTurno(),
+                turnoAsignadoEntity.getFecha(),
+                turnoAsignadoEntity.getHora(),
+                turnoAsignadoEntity.getIdProfesional(),
+                turnoAsignadoEntity.getNombreProfesional(),
+                turnoAsignadoEntity.getApellidoProfesional(),
+                turnoAsignadoEntity.getEspecialidad(),
+                turnoAsignadoEntity.getMailProfesional(),
+                turnoAsignadoEntity.getIdPaciente(),
+                turnoAsignadoEntity.getNombrePaciente(),
+                turnoAsignadoEntity.getApellidoPaciente(),
+                turnoAsignadoEntity.getDniPaciente(),
+                turnoAsignadoEntity.getTelefonoPaciente(),
+                turnoAsignadoEntity.getMailPaciente(),
+                turnoAsignadoEntity.getTipoConsulta(),
+                turnoAsignadoEntity.getMotivoConsulta(),
+                turnoAsignadoEntity.getEstadoPago(),
+                turnoAsignadoEntity.getIdPagoMP()
+                );
+
+       /* MailTurnoModel mailTurnoModel = new MailTurnoModel(
                 pacienteEntity.getMail(),
                 pacienteEntity.getNombre() + " " + pacienteEntity.getApellido(),
                 pacienteEntity.getDni(),
@@ -107,10 +144,13 @@ public class TurnosServiceImpl implements TurnosService {
                 profesionalEntity.getNombre() + " " + profesionalEntity.getApellido(),
                 profesionalEntity.getTelefono(),
                 asignarTurnoModel.getEspecialidad(),
+                profesionalEntity.getAliasMP(),
                 asignarTurnoModel.getFecha(),
                 configuracionTurnosEntity.getHora(),
                 asignarTurnoModel.getTipoConsulta(),
-                asignarTurnoModel.getMotivoConsulta());
+                asignarTurnoModel.getMotivoConsulta(),
+                valorConsultaEntity.getValorConsulta(),
+                valorConsultaEntity.getValorDeSeña());
 
         PlantillasMails platilla = new PlantillasMails();
 
@@ -122,8 +162,9 @@ public class TurnosServiceImpl implements TurnosService {
         }
 
         //Enviar mail a profesional
-        mailsService.enviarMail(profesionalEntity.getMail(), platilla.crearPlantillaParaProfesional(mailTurnoModel));
+        mailsService.enviarMail(profesionalEntity.getMail(), platilla.crearPlantillaParaProfesional(mailTurnoModel));*/
 
+        return turnoAsignadoModel;
     }
 
     @Override
@@ -166,6 +207,10 @@ public class TurnosServiceImpl implements TurnosService {
 
         Calendar calendar = Calendar.getInstance();
 
+        calendar.set(Calendar.HOUR_OF_DAY, 00);
+        calendar.set(Calendar.MINUTE, 00);
+        calendar.set(Calendar.SECOND, 00);
+
         String fechayHora = format.format(calendar.getTime());
 
         List<TurnoAsignadoEntity> turnoAsignadoEntity = this.turnosAsignadosRepository.buscarMisTurnos(dni_Paciente, fechayHora);
@@ -189,7 +234,9 @@ public class TurnosServiceImpl implements TurnosService {
                         e.getTelefonoPaciente(),
                         e.getMailPaciente(),
                         e.getTipoConsulta(),
-                        e.getMotivoConsulta()))
+                        e.getMotivoConsulta(),
+                        e.getEstadoPago(),
+                        e.getIdPagoMP()))
                 .collect(Collectors.toList());
 
         return list;
@@ -226,7 +273,47 @@ public class TurnosServiceImpl implements TurnosService {
                         e.getTelefonoPaciente(),
                         e.getMailPaciente(),
                         e.getTipoConsulta(),
-                        e.getMotivoConsulta()))
+                        e.getMotivoConsulta(),
+                        e.getEstadoPago(),
+                        e.getIdPagoMP()))
+                .collect(Collectors.toList());
+
+        return list;
+    }
+
+    @Override
+    public List<TurnoAsignadoModel> agendaGeneral() throws Exception {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Calendar calendar = Calendar.getInstance();
+
+        String fechayHora = format.format(calendar.getTime());
+
+        List<TurnoAsignadoEntity> turnoAsignadoEntity = this.turnosAsignadosRepository.buscarAgendaGeneral(fechayHora);
+
+        List<TurnoAsignadoModel> list = turnoAsignadoEntity
+                .stream()
+                .map((e) -> new TurnoAsignadoModel(
+                        e.getIdTurnoAsignado(),
+                        e.getIdConfiguracionTurno(),
+                        e.getFecha(),
+                        e.getHora(),
+                        e.getIdProfesional(),
+                        e.getNombreProfesional(),
+                        e.getApellidoProfesional(),
+                        e.getEspecialidad(),
+                        e.getMailProfesional(),
+                        e.getIdPaciente(),
+                        e.getNombrePaciente(),
+                        e.getApellidoPaciente(),
+                        e.getDniPaciente(),
+                        e.getTelefonoPaciente(),
+                        e.getMailPaciente(),
+                        e.getTipoConsulta(),
+                        e.getMotivoConsulta(),
+                        e.getEstadoPago(),
+                        e.getIdPagoMP()))
                 .collect(Collectors.toList());
 
         return list;
@@ -260,7 +347,9 @@ public class TurnosServiceImpl implements TurnosService {
                         e.getTelefonoPaciente(),
                         e.getMailPaciente(),
                         e.getTipoConsulta(),
-                        e.getMotivoConsulta()))
+                        e.getMotivoConsulta(),
+                        e.getEstadoPago(),
+                        e.getIdPagoMP()))
                 .collect(Collectors.toList());
 
         return list;
@@ -271,15 +360,16 @@ public class TurnosServiceImpl implements TurnosService {
 
         TurnoAsignadoEntity turnoAsignado =  this.turnosAsignadosRepository.buscarTurnoXId(idTurnoAsignado);
 
-        ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByidProfesional(turnoAsignado.getIdProfesional());
+       /* ProfesionalEntity profesionalEntity = this.profesionalesRepository.findByidProfesional(turnoAsignado.getIdProfesional());
 
         PacienteEntity pacienteEntity = this.pacientesRepository.findByIdPaciente(turnoAsignado.getIdPaciente());
         //enviar mail a paciente y profesional
 
+        ValorConsultaEntity valorConsultaEntity = this.valorConsultaRepository.findByIdValorConsulta(turnoAsignado.getIdProfesional(), turnoAsignado.getTipoConsulta());*/
+
         this.turnosAsignadosRepository.delete(turnoAsignado);
 
-
-        MailTurnoModel mailTurnoModel = new MailTurnoModel(
+        /*MailTurnoModel mailTurnoModel = new MailTurnoModel(
                 pacienteEntity.getMail(),
                 pacienteEntity.getNombre() + " " + pacienteEntity.getApellido(),
                 pacienteEntity.getDni(),
@@ -288,10 +378,13 @@ public class TurnosServiceImpl implements TurnosService {
                 profesionalEntity.getNombre() + " " + profesionalEntity.getApellido(),
                 profesionalEntity.getTelefono(),
                 turnoAsignado.getEspecialidad(),
+                profesionalEntity.getAliasMP(),
                 turnoAsignado.getFecha(),
                 turnoAsignado.getHora(),
                 turnoAsignado.getTipoConsulta(),
-                turnoAsignado.getMotivoConsulta());
+                turnoAsignado.getMotivoConsulta(),
+                valorConsultaEntity.getValorConsulta(),
+                valorConsultaEntity.getValorDeSeña());
 
         PlantillasMails platilla = new PlantillasMails();
 
@@ -299,7 +392,7 @@ public class TurnosServiceImpl implements TurnosService {
         mailsService.enviarMail(pacienteEntity.getMail(), platilla.crearPlantillaParaPacienteCancelacion(mailTurnoModel));
 
         //Enviar mail a profesional
-        mailsService.enviarMail(profesionalEntity.getMail(), platilla.crearPlantillaParaProfesionalCancelacion(mailTurnoModel));
+        mailsService.enviarMail(profesionalEntity.getMail(), platilla.crearPlantillaParaProfesionalCancelacion(mailTurnoModel));*/
 
     }
 
@@ -325,11 +418,48 @@ public class TurnosServiceImpl implements TurnosService {
                 e.getTelefonoPaciente(),
                 e.getMailPaciente(),
                 e.getTipoConsulta(),
-                e.getMotivoConsulta());
+                e.getMotivoConsulta(),
+                e.getEstadoPago(),
+                e.getIdPagoMP());
 
         return turnoAsignadoModel;
 
 
+
+    }
+
+    @Override
+    public void marcarCobroSeña(Long idTurnoAsignado) throws Exception {
+
+        TurnoAsignadoEntity e =  this.turnosAsignadosRepository.buscarTurnoXId(idTurnoAsignado);
+
+        if(e != null) {
+
+            if (e.getEstadoPago().equals("PENDIENTE")){
+                e.setEstadoPago("APROBADO");
+            }else{
+                e.setEstadoPago("PENDIENTE");
+            }
+
+            e.setIdPagoMP("Otro medio de pago");
+
+            this.turnosAsignadosRepository.save(e);
+        }
+                                        
+    }
+
+    @Override
+    public void marcarEstadoSeña(Long idTurnoAsignado, String idPagaMP, String estadoPago) throws Exception {
+
+        TurnoAsignadoEntity e =  this.turnosAsignadosRepository.buscarTurnoXId(idTurnoAsignado);
+
+        if(e != null) {
+
+            e.setEstadoPago(estadoPago);
+            e.setIdPagoMP(idPagaMP);
+
+            this.turnosAsignadosRepository.save(e);
+        }
 
     }
 }
