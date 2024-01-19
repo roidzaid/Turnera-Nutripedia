@@ -9,7 +9,7 @@ public class TurnoAsignadoModel {
     private String fecha;
     private String hora;
     private Long idProfesional;
-        private String nombreProfesional;
+    private String nombreProfesional;
     private String apellidoProfesional;
     private String especialidad;
     private String mailProfesional;

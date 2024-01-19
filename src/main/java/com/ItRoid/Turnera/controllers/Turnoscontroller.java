@@ -114,6 +114,21 @@ public class Turnoscontroller {
         }
     }
 
+    @GetMapping("/agendaGeneral/{fecha}")
+    public ResponseEntity<?> agenda(@PathVariable("fecha") String fecha) throws Exception{
+
+        logger.info("Buscar agenda general por fecha ");
+
+        try {
+
+            List<TurnoAsignadoModel> agenda = this.turnosService.agendaGeneral(fecha);
+
+            return new ResponseEntity<List<TurnoAsignadoModel>>(agenda, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/{idTurnoAsignado}")
     public ResponseEntity<?> cancelarTurno(@PathVariable("idTurnoAsignado") Long idTurnoAsignado) throws Exception{
 

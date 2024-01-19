@@ -3,12 +3,14 @@ package com.ItRoid.Turnera.services.Impl;
 import com.ItRoid.Turnera.controllers.HorariosController;
 import com.ItRoid.Turnera.entities.ConfiguracionTurnosEntity;
 import com.ItRoid.Turnera.entities.HorariosEntity;
+import com.ItRoid.Turnera.entities.ProfesionalEntity;
 import com.ItRoid.Turnera.models.*;
 import com.ItRoid.Turnera.repositories.ConfiguracionTurnosRepository;
 import com.ItRoid.Turnera.repositories.HorariosRepository;
 import com.ItRoid.Turnera.services.FeriadosService;
 import com.ItRoid.Turnera.services.HorariosService;
 import com.ItRoid.Turnera.services.LicenciasService;
+import com.ItRoid.Turnera.services.ProfesionalesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ public class HorariosServiceImpl implements HorariosService {
     @Autowired
     private LicenciasService licenciasService;
 
+    @Autowired
+    private ProfesionalesService profesionalesService;
 
     @Override
     public void borrarHorario(Long idHorario) throws Exception {
@@ -199,6 +203,8 @@ public class HorariosServiceImpl implements HorariosService {
 
         List<HorariosEntity> horariosEntity = this.horariosRepository.findByIdProfesionalYTipoTurno(idProfesional, tipoTurno);
 
+        ProfesionalModel profesionalModel = this.profesionalesService.buscarProfesionalxId(idProfesional);
+
         List<DiasDisponiblesModel> DiasDisponibles = new ArrayList<>();
 
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -211,9 +217,17 @@ public class HorariosServiceImpl implements HorariosService {
         fecha.set(añoHoy, mesHoy, diaHoy);
 
         int cant = 0;
+        int diasApertura = 0;
+
+        // validamos si tiene cargado los dias de apertura, sino lo tiene dejamos por defecto 30 dias
+         if (profesionalModel.getDiasAbrirAgenda() == null || Integer.parseInt(profesionalModel.getDiasAbrirAgenda()) == 0){
+             diasApertura = 30;
+         }else{
+             diasApertura = Integer.parseInt(profesionalModel.getDiasAbrirAgenda());
+         }
 
         // cantidad de dias en los que se abre la agenda de turnos
-        while(cant < 30){
+        while(cant < diasApertura){
 
             String diaDeSemana="";
             int nD =-1;

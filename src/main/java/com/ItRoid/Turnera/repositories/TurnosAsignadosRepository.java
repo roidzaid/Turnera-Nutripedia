@@ -44,5 +44,10 @@ public interface TurnosAsignadosRepository extends JpaRepository<TurnoAsignadoEn
             nativeQuery = true)
     List<TurnoAsignadoEntity> buscarAgendaGeneral(String fechayHora);
 
+    @Query(
+            value = "SELECT * FROM turnos_asignados ta WHERE fechay_hora >= ?1 and fechay_hora <= ?2 order by fechay_hora",
+            nativeQuery = true)
+    List<TurnoAsignadoEntity> buscarAgendaGeneralPorFecha(String inicioDia, String finDia);
+
 
 }

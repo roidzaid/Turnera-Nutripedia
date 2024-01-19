@@ -10,6 +10,7 @@ import com.ItRoid.Turnera.services.ProfesionalesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
@@ -43,7 +44,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                 profesional.getInstagram(),
                 profesional.getUsuario(),
                 profesional.getAliasMP(),
-                    "SI"
+               "SI",
+                profesional.getDiasAbrirAgenda()
                 );
 
             this.profesionalesRepository.save(profesionalEntity);
@@ -79,7 +81,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getInstagram(),
                     profesionalEntity.getUsuario(),
                     profesionalEntity.getAliasMP(),
-                    profesionalEntity.getActivo());
+                    profesionalEntity.getActivo(),
+                    profesionalEntity.getDiasAbrirAgenda());
 
 
             return profesionalModel;
@@ -109,7 +112,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getInstagram(),
                     profesionalEntity.getUsuario(),
                     profesionalEntity.getAliasMP(),
-                    profesionalEntity.getActivo());
+                    profesionalEntity.getActivo(),
+                    profesionalEntity.getDiasAbrirAgenda());
 
             return profesionalModel;
 
@@ -138,7 +142,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                     profesionalEntity.getInstagram(),
                     profesionalEntity.getUsuario(),
                     profesionalEntity.getAliasMP(),
-                    profesionalEntity.getActivo());
+                    profesionalEntity.getActivo(),
+                    profesionalEntity.getDiasAbrirAgenda());
 
             return profesionalModel;
 
@@ -168,7 +173,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getInstagram(),
                             e.getUsuario(),
                             e.getAliasMP(),
-                            e.getActivo()))
+                            e.getActivo(),
+                            e.getDiasAbrirAgenda()))
                     .collect(Collectors.toList());
 
 
@@ -200,7 +206,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                             e.getInstagram(),
                             e.getUsuario(),
                             e.getAliasMP(),
-                            e.getActivo()))
+                            e.getActivo(),
+                            e.getDiasAbrirAgenda()))
                     .collect(Collectors.toList());
 
 
@@ -230,7 +237,8 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
                         e.getInstagram(),
                         e.getUsuario(),
                         e.getAliasMP(),
-                        e.getActivo()))
+                        e.getActivo(),
+                        e.getDiasAbrirAgenda()))
                 .collect(Collectors.toList());
 
 
@@ -254,6 +262,7 @@ public class ProfesionalesServiceImpl implements ProfesionalesService {
             profesionalEntity.setMail(profesional.getMail());
             profesionalEntity.setInstagram(profesional.getInstagram());
             profesionalEntity.setAliasMP(profesional.getAliasMP());
+            profesionalEntity.setDiasAbrirAgenda(profesional.getDiasAbrirAgenda());
 
             this.profesionalesRepository.save(profesionalEntity);
 

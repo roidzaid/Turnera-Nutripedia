@@ -320,6 +320,41 @@ public class TurnosServiceImpl implements TurnosService {
     }
 
     @Override
+    public List<TurnoAsignadoModel> agendaGeneral(String fecha) throws Exception {
+        String inicioDia = fecha + " 00:00:00";
+        String finDia = fecha + " 24:00:00";
+
+
+        List<TurnoAsignadoEntity> turnoAsignadoEntity = this.turnosAsignadosRepository.buscarAgendaGeneralPorFecha(inicioDia, finDia);
+
+        List<TurnoAsignadoModel> list = turnoAsignadoEntity
+                .stream()
+                .map((e) -> new TurnoAsignadoModel(
+                        e.getIdTurnoAsignado(),
+                        e.getIdConfiguracionTurno(),
+                        e.getFecha(),
+                        e.getHora(),
+                        e.getIdProfesional(),
+                        e.getNombreProfesional(),
+                        e.getApellidoProfesional(),
+                        e.getEspecialidad(),
+                        e.getMailProfesional(),
+                        e.getIdPaciente(),
+                        e.getNombrePaciente(),
+                        e.getApellidoPaciente(),
+                        e.getDniPaciente(),
+                        e.getTelefonoPaciente(),
+                        e.getMailPaciente(),
+                        e.getTipoConsulta(),
+                        e.getMotivoConsulta(),
+                        e.getEstadoPago(),
+                        e.getIdPagoMP()))
+                .collect(Collectors.toList());
+
+        return list;
+    }
+
+    @Override
     public List<TurnoAsignadoModel> agenda(Long idProfesional, String fecha) throws Exception {
 
         String inicioDia = fecha + " 00:00:00";

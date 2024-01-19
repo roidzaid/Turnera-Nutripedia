@@ -8,6 +8,7 @@ insert into especialidades (id_especialidad, especialidad) values ('009', 'ODONT
 insert into especialidades (id_especialidad, especialidad) values ('010', 'APTO ESCOLAR');
 insert into especialidades (id_especialidad, especialidad) values ('011', 'ELECTROCARDIOGRAMA');
 insert into especialidades (id_especialidad, especialidad) values ('012', 'NEUROLOGIA INFANTIL');
+insert into especialidades (id_especialidad, especialidad) values ('013', 'ENDOCRINOLOGIA INFANTIL');
 
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('001', 'CONTROL DE ENFERMEDAD');
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('002', 'CONTROL DE SALUD');
@@ -26,7 +27,6 @@ insert into tipo_turno (id_tipo_turno, tipo_turno) values ('014', 'APTO BUCODENT
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('015', 'PEDIATRIA y ODONTOLOGIA');
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('016', 'PEDIATRIA y OFTALMOLOGIA');
 insert into tipo_turno (id_tipo_turno, tipo_turno) values ('017', 'ELECTROCARDIOGRAMA');
-
 
 
 insert into feriados (id_feriado, fecha, detalle) values ('001', '01-01-2022', 'Año Nuevo');
